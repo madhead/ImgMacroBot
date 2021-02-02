@@ -1,6 +1,8 @@
 .gradle
 build
 
+.idea
+
 logo.png
 
 templates/*.xcf
