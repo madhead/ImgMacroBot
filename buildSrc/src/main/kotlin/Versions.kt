@@ -12,6 +12,7 @@ object Versions {
      */
     object Plugins {
         const val KOTLIN = "1.4.21"
+        const val DETEKT = "1.15.0"
     }
 
     /**

@@ -12,6 +12,9 @@ import kotlinx.serialization.json.Json
 import org.apache.logging.log4j.LogManager
 import org.koin.ktor.ext.inject
 
+/**
+ * [Telegram Bot API webhooks](https://core.telegram.org/bots/api#setwebhook) handler.
+ */
 fun Route.webhook() {
     val logger = LogManager.getLogger("me.madhead.imgmacrobot.runner.ktor.routes.Webhook")
     val json by inject<Json>()

@@ -16,6 +16,9 @@ import me.madhead.imgmacrobot.runner.ktor.routes.webhook
 import org.apache.logging.log4j.LogManager
 import org.koin.ktor.ext.Koin
 
+/**
+ * Main [Ktor module](https://ktor.io/docs/modules.html).
+ */
 fun Application.main() {
     install(DefaultHeaders)
     install(CallLogging)
