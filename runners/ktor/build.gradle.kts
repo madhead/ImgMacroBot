@@ -8,6 +8,9 @@ dependencies {
     implementation(platform("org.apache.logging.log4j:log4j-bom:${Versions.Dependencies.LOG4J}"))
 
     implementation("io.ktor:ktor-server-netty")
+    implementation("org.koin:koin-ktor:${Versions.Dependencies.KOIN}")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:${Versions.Dependencies.KOTLINX_SERIALIZATION}")
+    implementation("dev.inmo:tgbotapi:${Versions.Dependencies.TGBOTAPI}")
     implementation("org.apache.logging.log4j:log4j-core")
     implementation("org.apache.logging.log4j:log4j-slf4j-impl")
 }
