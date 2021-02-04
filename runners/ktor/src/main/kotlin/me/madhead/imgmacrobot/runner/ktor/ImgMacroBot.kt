@@ -11,7 +11,10 @@ import io.ktor.response.respondText
 import io.ktor.routing.get
 import io.ktor.routing.post
 import io.ktor.routing.routing
+import me.madhead.imgmacrobot.runner.ktor.koin.configModule
 import me.madhead.imgmacrobot.runner.ktor.koin.jsonModule
+import me.madhead.imgmacrobot.runner.ktor.koin.pipelineModule
+import me.madhead.imgmacrobot.runner.ktor.koin.telegramModule
 import me.madhead.imgmacrobot.runner.ktor.routes.webhook
 import org.apache.logging.log4j.LogManager
 import org.koin.ktor.ext.Koin
@@ -25,7 +28,10 @@ fun Application.main() {
     install(Compression)
     install(Koin) {
         modules(
+                configModule(environment.config),
                 jsonModule,
+                telegramModule,
+                pipelineModule,
         )
     }
 

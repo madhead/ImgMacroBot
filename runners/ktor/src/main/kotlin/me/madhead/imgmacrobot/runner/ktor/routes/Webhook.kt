@@ -9,6 +9,7 @@ import io.ktor.routing.Route
 import io.ktor.routing.application
 import io.ktor.routing.post
 import kotlinx.serialization.json.Json
+import me.madhead.imgmacrobot.core.ImageMacroGenerationPipeline
 import org.apache.logging.log4j.LogManager
 import org.koin.ktor.ext.inject
 
@@ -18,6 +19,7 @@ import org.koin.ktor.ext.inject
 fun Route.webhook() {
     val logger = LogManager.getLogger("me.madhead.imgmacrobot.runner.ktor.routes.Webhook")
     val json by inject<Json>()
+    val pipeline by inject<ImageMacroGenerationPipeline>()
 
     post(application.environment.config.property("telegram.token").getString()) {
         try {
@@ -28,6 +30,8 @@ fun Route.webhook() {
             val update = json.decodeFromString(UpdateDeserializationStrategy, payload)
 
             logger.info("Update object: {}", update)
+
+            pipeline.process(update)
         } catch (ignored: Exception) {
             logger.error("Failed to handle the request", ignored)
         }
