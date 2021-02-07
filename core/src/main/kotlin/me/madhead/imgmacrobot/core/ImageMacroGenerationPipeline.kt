@@ -2,7 +2,6 @@ package me.madhead.imgmacrobot.core
 
 import dev.inmo.tgbotapi.bot.RequestsExecutor
 import dev.inmo.tgbotapi.extensions.api.answers.answerInlineQuery
-import dev.inmo.tgbotapi.types.InlineQueries.InlineQueryResult.InlineQueryResultLocation
 import dev.inmo.tgbotapi.types.update.InlineQueryUpdate
 import dev.inmo.tgbotapi.types.update.abstracts.Update
 import org.apache.logging.log4j.LogManager
@@ -33,17 +32,11 @@ class ImageMacroGenerationPipeline(
 
         logger.info("Inline query: {}", update.data)
 
-        requestsExecutor.answerInlineQuery(
+        val a = requestsExecutor.answerInlineQuery(
                 inlineQuery = update.data,
-                results = listOf(
-                        // Best pancakes in the universe!
-                        InlineQueryResultLocation(
-                                id = "test",
-                                latitude = 59.43749626859908,
-                                longitude = 24.743188739942404,
-                                title = "Kompressor"
-                        )
-                )
+                results = generators.mapNotNull { it.generate(update.data) }
         )
+
+        logger.info("Result: {}", a)
     }
 }

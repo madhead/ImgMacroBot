@@ -77,10 +77,10 @@ data class ImageUploadResponseBodyDataSuccess(
         // val adUrl:
 
         @SerialName("title")
-        val title: String,
+        val title: String?,
 
         @SerialName("description")
-        val description: String,
+        val description: String?,
 
         @SerialName("name")
         val name: String,
