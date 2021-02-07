@@ -27,6 +27,10 @@ allprojects {
         withType<KotlinCompile> {
             kotlinOptions.jvmTarget = Versions.JVM
         }
+        withType<Jar> {
+            // Workaround for https://stackoverflow.com/q/42174572/750510
+            archiveBaseName.set(rootProject.name + "-" + this.project.path.removePrefix(":").replace(":", "-"))
+        }
         withType<Test> {
             useJUnitPlatform()
             testLogging {

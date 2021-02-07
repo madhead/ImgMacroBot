@@ -1,0 +1,18 @@
+#!/usr/bin/env ansible-playbook
+
+---
+- name: ImgMacroBot
+  hosts: ImgMacroBot
+  roles:
+    - role: geerlingguy.java
+      java_packages: openjdk-{{ java.version }}-jre-headless
+      become: yes
+    - role: nginxinc.nginx
+      become: yes
+    - role: nginxinc.nginx_config
+      nginx_config_cleanup: true
+      nginx_config_cleanup_files:
+        - /etc/nginx/conf.d/default.conf
+      become: yes
+    - role: ImgMacroBot
+      become: yes
