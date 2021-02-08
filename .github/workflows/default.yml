@@ -29,5 +29,12 @@ jobs:
       - uses: ansible/ansible-lint-action@master
         with:
           targets: deploy/ImgMacroBot.yml
-          args: >-
-            -c deploy/.ansible-lint
+          args: -c deploy/.ansible-lint
+    continue-on-error: true
+  check-gradle-version:
+    name: Check Gradle version
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: madhead/check-gradle-version@v1
+    continue-on-error: true

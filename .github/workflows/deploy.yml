@@ -1,11 +1,50 @@
 name: Deploy
 on:
   release:
-#    types:
-#      - created
+    types:
+      - released
 jobs:
   deploy:
     name: Deploy
+    environment:
+      name: Production
+      url: https://t.me/ImgMacroBot
     runs-on: ubuntu-20.04
     steps:
-      - run: echo "${{ github.event }}"
+      - uses: actions/checkout@v2
+
+      - run: mkdir -p runners/ktor/build/distributions
+      - uses: dsaltares/fetch-gh-release-asset@master
+        with:
+          version: ${{ github.event.release.id }}
+          file: ImgMacroBot.tar
+          target: runners/ktor/build/distributions/ImgMacroBot.tar
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - run: sudo apt update && sudo apt install ansible
+      - run: pip install oci
+      - run: ansible-galaxy collection install community.crypto
+      - run: ansible-galaxy collection install oracle.oci
+      - run: ansible-galaxy install -r requirements.yml
+        working-directory: deploy
+
+      - run: mkdir -p ~/.oci
+      - run: printf %s "$DEPLOYMENT_KEY" > ~/.oci/deployment.key
+        shell: bash
+        env:
+          DEPLOYMENT_KEY: ${{ secrets.DEPLOYMENT_KEY }}
+      - run: chmod 600 ~/.oci/deployment.key
+      - run: printf %s "$OCI_KEY" > ~/.oci/oci.key
+        shell: bash
+        env:
+          OCI_KEY: ${{ secrets.OCI_KEY }}
+      - run: printf %s "$OCI_CONFIG" > ~/.oci/config
+        shell: bash
+        env:
+          OCI_CONFIG: ${{ secrets.OCI_CONFIG }}
+
+      - run: ./ImgMacroBot.yml -i inventory.oci.yml --private-key ~/.oci/deployment.key
+        working-directory: deploy
+        env:
+          ANSIBLE_HOST_KEY_CHECKING: false
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}

@@ -1,5 +1,6 @@
 - name: Persist iptables
-  ansible.builtin.command: netfilter-persistent save
+  ansible.builtin.command:
+    cmd: netfilter-persistent save
 
 - name: Restart NGINX
   ansible.builtin.systemd:
