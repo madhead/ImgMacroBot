@@ -1,8 +1,8 @@
 name: Deploy
 on:
   release:
-    types:
-      - created
+#    types:
+#      - created
 jobs:
   deploy:
     name: Deploy
