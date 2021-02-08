@@ -1,6 +1,7 @@
 name: Check Gradle version
 on:
   - push
+  - pull_request
 jobs:
   check-gradle-version:
     name: Check Gradle version

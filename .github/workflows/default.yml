@@ -1,0 +1,33 @@
+name: Default
+on:
+  - push
+  - pull_request
+jobs:
+  detekt:
+    name: Detekt
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      - run: ./gradlew detekt
+  test:
+    name: Test
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      - run: ./gradlew clean test
+  lint-ansible:
+    name: Lint Ansible
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ansible/ansible-lint-action@master
+        with:
+          targets: deploy/ImgMacroBot.yml
+          args: >-
+            -c deploy/.ansible-lint

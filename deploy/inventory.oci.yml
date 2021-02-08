@@ -1,0 +1,5 @@
+plugin: oracle.oci.oci
+config_profile: ANSIBLE
+
+groups:
+  ImgMacroBot: "'ImgMacroBot' in freeform_tags"

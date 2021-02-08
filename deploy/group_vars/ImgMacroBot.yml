@@ -1,0 +1,18 @@
+ansible_user: ubuntu
+
+java:
+  version: 11
+
+pki:
+  directory: /etc/pki
+
+bot:
+  user: imgmacrobot
+  directory: /opt/ImgMacroBot
+  port: 5001
+  config: ImgMacroBot.env
+  service: ImgMacroBot.service
+  java:
+    home: /usr/lib/jvm/java-{{ java.version }}-openjdk-amd64
+  telegram:
+    token: "{{ lookup('env', 'TELEGRAM_TOKEN') }}"

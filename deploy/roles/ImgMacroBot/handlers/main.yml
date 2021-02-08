@@ -1,0 +1,7 @@
+- name: Persist iptables
+  ansible.builtin.command: netfilter-persistent save
+
+- name: Restart NGINX
+  ansible.builtin.systemd:
+    name: nginx
+    state: restarted

@@ -11,6 +11,8 @@ dependencies {
     implementation("org.koin:koin-ktor:${Versions.Dependencies.KOIN}")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:${Versions.Dependencies.KOTLINX_SERIALIZATION}")
     implementation("dev.inmo:tgbotapi:${Versions.Dependencies.TGBOTAPI}")
+    implementation(project(":imgur:ktor"))
+    implementation(project(":core"))
     implementation("org.apache.logging.log4j:log4j-core")
     implementation("org.apache.logging.log4j:log4j-slf4j-impl")
 }

@@ -1,0 +1,17 @@
+# {{ ansible_managed }}
+
+[Unit]
+Description=ImgMacroBot
+Requires=network.target remote-fs.target
+After=network.target remote-fs.target
+
+[Service]
+Type=simple
+User={{ bot.user }}
+Group={{ bot.user }}
+EnvironmentFile=/etc/{{ bot.config }}
+ExecStart={{ bot.directory }}/bin/ImgMacroBot
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
