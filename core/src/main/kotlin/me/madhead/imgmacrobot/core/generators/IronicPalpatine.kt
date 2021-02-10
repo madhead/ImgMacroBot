@@ -3,10 +3,15 @@ package me.madhead.imgmacrobot.core.generators
 import dev.inmo.tgbotapi.types.InlineQueries.InlineQueryResult.InlineQueryResultPhotoImpl
 import dev.inmo.tgbotapi.types.InlineQueries.InlineQueryResult.abstracts.InlineQueryResult
 import dev.inmo.tgbotapi.types.InlineQueries.abstracts.InlineQuery
+import me.madhead.imgmacrobot.core.EmptyParsedInlineQuery
+import me.madhead.imgmacrobot.core.ImageMacroGenerationPipeline
 import me.madhead.imgmacrobot.core.ImageMacroGenerator
+import me.madhead.imgmacrobot.core.ParsedInlineQuery
+import me.madhead.imgmacrobot.core.ParsingImageMacroGenerator
 import me.madhead.imgmacrobot.imgur.ImageUploadRequest
 import me.madhead.imgmacrobot.imgur.ImageUploadResponseBodyDataSuccess
 import me.madhead.imgmacrobot.imgur.Imgur
+import org.apache.logging.log4j.LogManager
 import java.nio.file.Path
 import java.util.UUID
 import kotlin.io.path.ExperimentalPathApi
@@ -20,14 +25,30 @@ import kotlin.io.path.readBytes
 class IronicPalpatine(
         private val templatesDir: Path,
         private val imgur: Imgur,
-) : ImageMacroGenerator {
-    override suspend fun generate(inlineQuery: InlineQuery): InlineQueryResult? {
+) : ParsingImageMacroGenerator<EmptyParsedInlineQuery> {
+    companion object {
+        private val logger = LogManager.getLogger(IronicPalpatine::class.java)!!
+    }
+
+    override fun parseInlineQuery(inlineQuery: InlineQuery): EmptyParsedInlineQuery? {
+        return if (inlineQuery.query.contains("ironic", ignoreCase = true) || ("ironic".contains(inlineQuery.query, ignoreCase = true))) {
+            EmptyParsedInlineQuery
+        } else {
+            null;
+        }
+    }
+
+    override suspend fun generate(parsedInlineQuery: EmptyParsedInlineQuery): InlineQueryResult? {
+        logger.debug("Generating image macro")
+
         return templatesDir.resolve("ironic.jpeg").takeIf { it.isRegularFile() }?.let { file ->
             val upload = imgur.imageUpload(ImageUploadRequest(
                     image = file.readBytes(),
                     name = "ironic.jpeg"
             ))
             val data = upload.body.data
+
+            logger.debug("Imgur upload result: {}", data)
 
             if (data !is ImageUploadResponseBodyDataSuccess) {
                 null
