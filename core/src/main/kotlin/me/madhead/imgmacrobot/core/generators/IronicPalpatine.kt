@@ -39,7 +39,7 @@ class IronicPalpatine(
     }
 
     override suspend fun generate(parsedInlineQuery: EmptyParsedInlineQuery): InlineQueryResult? {
-        logger.debug("Generating image macro")
+        logger.info("Generating image macro")
 
         return templatesDir.resolve("ironic.jpeg").takeIf { it.isRegularFile() }?.let { file ->
             val upload = imgur.imageUpload(ImageUploadRequest(
