@@ -1,3 +1,9 @@
+- name: Ensure OpenGL is installed
+  ansible.builtin.apt:
+    name: libgl1
+    state: latest
+    update_cache: true
+
 - name: Ensure the service is stopped
   ansible.builtin.systemd:
     name: '{{ bot.service }}'
@@ -29,6 +35,13 @@
     group: '{{ bot.user }}'
     state: directory
     mode: 0755
+- name: Create fonts directory
+  ansible.builtin.file:
+    path: '{{ bot.directory }}/fonts'
+    owner: '{{ bot.user }}'
+    group: '{{ bot.user }}'
+    state: directory
+    mode: 0755
 - name: Copy service artifact
   ansible.builtin.unarchive:
     remote_src: false
@@ -43,6 +56,14 @@
     remote_src: false
     src: '{{ playbook_dir }}/../templates/'
     dest: '{{ bot.directory }}/templates'
+    owner: '{{ bot.user }}'
+    group: '{{ bot.user }}'
+    mode: 0444
+- name: Copy fonts
+  ansible.builtin.copy:
+    remote_src: false
+    src: '{{ playbook_dir }}/../fonts/'
+    dest: '{{ bot.directory }}/fonts'
     owner: '{{ bot.user }}'
     group: '{{ bot.user }}'
     mode: 0444

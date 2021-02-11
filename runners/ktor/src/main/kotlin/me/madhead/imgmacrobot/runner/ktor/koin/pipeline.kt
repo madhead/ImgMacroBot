@@ -3,6 +3,7 @@ package me.madhead.imgmacrobot.runner.ktor.koin
 import io.ktor.config.ApplicationConfig
 import me.madhead.imgmacrobot.core.ImageMacroGenerationPipeline
 import me.madhead.imgmacrobot.core.generators.IronicPalpatine
+import me.madhead.imgmacrobot.core.generators.WhatIfIToldYou
 import org.koin.dsl.module
 import kotlin.io.path.ExperimentalPathApi
 import kotlin.io.path.Path
@@ -20,6 +21,11 @@ val pipelineModule = module {
                                 Path(get<ApplicationConfig>().property("templates_dir").getString()),
                                 get(),
                         ),
+                        WhatIfIToldYou(
+                                Path(get<ApplicationConfig>().property("templates_dir").getString()),
+                                Path(get<ApplicationConfig>().property("fonts_dir").getString()),
+                                get(),
+                        )
                 ),
                 get(),
         )
