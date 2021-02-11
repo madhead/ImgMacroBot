@@ -4,15 +4,31 @@ import dev.inmo.tgbotapi.bot.RequestsExecutor
 import dev.inmo.tgbotapi.extensions.api.answers.answerInlineQuery
 import dev.inmo.tgbotapi.types.update.InlineQueryUpdate
 import dev.inmo.tgbotapi.types.update.abstracts.Update
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.supervisorScope
+import kotlinx.coroutines.time.delay
+import kotlinx.coroutines.withTimeout
+import kotlinx.coroutines.withTimeoutOrNull
 import org.apache.logging.log4j.LogManager
+import java.time.Duration
 
 /**
  * [Telegram's Bot API updates](https://core.telegram.org/bots/api#getting-updates) processor. It responds with a list of generated image
  * macros for incoming [inline queries](https://core.telegram.org/bots/inline) and filters out all other updates.
+ *
+ * @property generators a list of registered [image macro generators][ImageMacroGenerator].
+ * @property requestsExecutor Telegram Bot API.
+ * @property timeout maximum time given to a single generator to provide any results in milliseconds.
  */
 class ImageMacroGenerationPipeline(
         private val generators: List<ImageMacroGenerator>,
         private val requestsExecutor: RequestsExecutor,
+        private val timeout: Long = 5_000
 ) {
     companion object {
         private val logger = LogManager.getLogger(ImageMacroGenerationPipeline::class.java)!!
@@ -32,11 +48,30 @@ class ImageMacroGenerationPipeline(
 
         logger.info("Inline query: {}", update.data)
 
-        val a = requestsExecutor.answerInlineQuery(
-                inlineQuery = update.data,
-                results = generators.mapNotNull { it.generate(update.data) }
-        )
+        val results = coroutineScope {
+            generators
+                    .map { generator ->
+                        async {
+                            try {
+                                withTimeout(timeout) {
+                                    generator.generate(update.data)
+                                }
+                            } catch (ignored: Throwable) {
+                                logger.error("{} failed!", generator::class.simpleName, ignored)
 
-        logger.info("Result: {}", a)
+                                null
+                            }
+                        }
+                    }
+                    .awaitAll()
+                    .filterNotNull()
+        }
+
+        logger.info("Inline query results: {}", results)
+
+        requestsExecutor.answerInlineQuery(
+                inlineQuery = update.data,
+                results = results
+        )
     }
 }
