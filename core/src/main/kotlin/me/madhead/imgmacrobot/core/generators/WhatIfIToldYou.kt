@@ -3,8 +3,9 @@ package me.madhead.imgmacrobot.core.generators
 import dev.inmo.tgbotapi.types.InlineQueries.InlineQueryResult.InlineQueryResultPhotoImpl
 import dev.inmo.tgbotapi.types.InlineQueries.InlineQueryResult.abstracts.InlineQueryResult
 import dev.inmo.tgbotapi.types.InlineQueries.abstracts.InlineQuery
+import io.micrometer.core.instrument.MeterRegistry
+import me.madhead.imgmacrobot.core.CachingImageMacroGenerator
 import me.madhead.imgmacrobot.core.ParsedInlineQuery
-import me.madhead.imgmacrobot.core.ParsingImageMacroGenerator
 import me.madhead.imgmacrobot.imgur.ImageUploadRequest
 import me.madhead.imgmacrobot.imgur.Imgur
 import org.apache.logging.log4j.LogManager
@@ -40,7 +41,8 @@ class WhatIfIToldYou(
     private val templatesDir: Path,
     private val fontsDir: Path,
     private val imgur: Imgur,
-) : ParsingImageMacroGenerator<WhatIfIToldYouParsedInlineQuery> {
+    registry: MeterRegistry? = null,
+) : CachingImageMacroGenerator<WhatIfIToldYouParsedInlineQuery>(registry) {
     companion object {
         private val logger = LogManager.getLogger(WhatIfIToldYou::class.java)!!
         private val regex = "What +if +I +told +you ++(.+)".toRegex(RegexOption.IGNORE_CASE)
@@ -53,6 +55,14 @@ class WhatIfIToldYou(
             ?.let { (whatIfIToldMeWhat) ->
                 WhatIfIToldYouParsedInlineQuery(whatIfIToldMeWhat)
             }
+    }
+
+    override fun cached(parsedInlineQuery: ParsedInlineQuery): InlineQueryResult? {
+        return null
+    }
+
+    override fun cache(parsedInlineQuery: ParsedInlineQuery, result: InlineQueryResult) {
+        Unit
     }
 
     override suspend fun generate(parsedInlineQuery: WhatIfIToldYouParsedInlineQuery): InlineQueryResult? {
