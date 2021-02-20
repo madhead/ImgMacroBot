@@ -20,6 +20,18 @@ jobs:
           file: ImgMacroBot.tar
           target: runners/ktor/build/distributions/ImgMacroBot.tar
           token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: dsaltares/fetch-gh-release-asset@master
+        with:
+          version: ${{ github.event.release.id }}
+          file: templates.zip
+          target: templates.zip
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: dsaltares/fetch-gh-release-asset@master
+        with:
+          version: ${{ github.event.release.id }}
+          file: fonts.zip
+          target: fonts.zip
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - run: sudo apt update && sudo apt install ansible
       - run: pip install oci
