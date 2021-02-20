@@ -12,6 +12,8 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
+      - run: rm -rf templates
+      - run: rm -rf fonts
 
       - run: mkdir -p runners/ktor/build/distributions
       - uses: dsaltares/fetch-gh-release-asset@master
@@ -32,6 +34,8 @@ jobs:
           file: fonts.zip
           target: fonts.zip
           token: ${{ secrets.GITHUB_TOKEN }}
+      - run: unzip templates.zip
+      - run: unzip fonts.zip
 
       - run: sudo apt update && sudo apt install ansible
       - run: pip install oci
