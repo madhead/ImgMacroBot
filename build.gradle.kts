@@ -14,6 +14,7 @@ allprojects {
     repositories {
         mavenCentral()
         jcenter()
+        maven("https://packages.jetbrains.team/maven/p/skija/maven")
     }
 
     configure<DetektExtension> {
