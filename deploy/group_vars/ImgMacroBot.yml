@@ -16,3 +16,13 @@ bot:
     home: /usr/lib/jvm/java-{{ java.version }}-openjdk-amd64
   telegram:
     token: "{{ lookup('env', 'TELEGRAM_TOKEN') }}"
+  promtail:
+    version: 2.1.0
+    user: promtail
+    directory: /opt/Promtail
+    positions_directory: /var/log/Promtail
+    config_directory: /etc/Promtail
+    service: Promtail@ImgMacroBot.service
+    api_user: "{{ lookup('env', 'GRAFANA_API_USER') }}"
+    api_key: "{{ lookup('env', 'GRAFANA_API_KEY') }}"
+    api_host: logs-prod-us-central1.grafana.net

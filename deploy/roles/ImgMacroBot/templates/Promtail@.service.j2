@@ -1,0 +1,16 @@
+# {{ ansible_managed }}
+
+[Unit]
+Description=%i Promtail
+Requires=network.target remote-fs.target
+After=network.target remote-fs.target
+
+[Service]
+Type=simple
+User={{ bot.promtail.user }}
+Group={{ bot.promtail.user }}
+ExecStart={{ bot.promtail.directory }}/promtail-linux-amd64 --config.file={{ bot.promtail.config_directory }}/%i.yaml
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

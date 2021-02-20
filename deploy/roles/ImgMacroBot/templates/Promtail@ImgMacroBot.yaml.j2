@@ -1,0 +1,24 @@
+# {{ ansible_managed }}
+
+server:
+  disable: true
+
+positions:
+  filename: {{ bot.promtail.positions_directory }}/ImgMacroBot.positions.yaml
+  ignore_invalid_yaml: true
+
+client:
+  url: 'https://{{ bot.promtail.api_user }}:{{ bot.promtail.api_key }}@{{ bot.promtail.api_host }}/api/prom/push'
+
+scrape_configs:
+  - job_name: journal
+    journal:
+      labels:
+        journal: true
+    relabel_configs:
+      - source_labels: ['__journal__systemd_unit']
+        target_label: 'unit'
+#    pipeline_stages:
+#      - multiline:
+#          firstline: '^\x{200B}'
+#          max_lines: 9999

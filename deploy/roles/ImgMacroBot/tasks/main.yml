@@ -3,12 +3,91 @@
     name: libgl1
     state: latest
     update_cache: true
+- name: Ensure unzip is installed
+  ansible.builtin.apt:
+    name: unzip
+    state: latest
+    update_cache: true
 
 - name: Ensure the service is stopped
   ansible.builtin.systemd:
     name: '{{ bot.service }}'
     state: stopped
   ignore_errors: yes
+
+- name: Ensure Promtail is stopped
+  ansible.builtin.systemd:
+    name: '{{ bot.promtail.service }}'
+    state: stopped
+  ignore_errors: yes
+
+- name: Ensure Promtail account exists
+  ansible.builtin.user:
+    name: '{{ bot.promtail.user }}'
+    groups:
+      - systemd-journal
+    append: true
+    state: present
+    system: true
+    create_home: false
+
+- name: Clear Promtail directory
+  ansible.builtin.file:
+    path: '{{ bot.promtail.directory }}'
+    state: absent
+- name: Create Promtail directory
+  ansible.builtin.file:
+    path: '{{ bot.promtail.directory }}'
+    owner: '{{ bot.promtail.user }}'
+    group: '{{ bot.promtail.user }}'
+    state: directory
+    mode: 0755
+
+- name: Ensure Promtail installation
+  ansible.builtin.unarchive:
+    remote_src: yes
+    src: 'https://github.com/grafana/loki/releases/download/v{{ bot.promtail.version }}/promtail-linux-amd64.zip'
+    dest: '{{ bot.promtail.directory }}'
+    owner: '{{ bot.promtail.user }}'
+    group: '{{ bot.promtail.user }}'
+
+- name: Ensure Promtail positions directory
+  ansible.builtin.file:
+    path: '{{ bot.promtail.positions_directory }}'
+    owner: '{{ bot.promtail.user }}'
+    group: '{{ bot.promtail.user }}'
+    state: directory
+    mode: 0755
+
+- name: Ensure Promtail configuration directory
+  ansible.builtin.file:
+    path: '{{ bot.promtail.config_directory }}'
+    owner: '{{ bot.promtail.user }}'
+    group: '{{ bot.promtail.user }}'
+    state: directory
+    mode: 0755
+- name: Ensure Promtail configuration
+  ansible.builtin.template:
+    src: Promtail@ImgMacroBot.yaml.j2
+    dest: '{{ bot.promtail.config_directory }}/ImgMacroBot.yaml'
+    owner: '{{ bot.promtail.user }}'
+    group: '{{ bot.promtail.user }}'
+    mode: 0644
+
+- name: Ensure Promtail unit
+  ansible.builtin.template:
+    src: 'Promtail@.service.j2'
+    dest: /etc/systemd/system/Promtail@.service
+    owner: '{{ bot.promtail.user }}'
+    group: '{{ bot.promtail.user }}'
+    mode: 0644
+
+- name: Ensure Promtail is started
+  ansible.builtin.systemd:
+    name: '{{ bot.promtail.service }}'
+    state: started
+    enabled: yes
+    daemon_reload: true
 
 - name: Ensure service account exists
   ansible.builtin.user:
