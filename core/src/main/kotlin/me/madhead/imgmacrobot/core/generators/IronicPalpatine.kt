@@ -4,9 +4,6 @@ import dev.inmo.tgbotapi.types.InlineQueries.InlineQueryResult.InlineQueryResult
 import dev.inmo.tgbotapi.types.InlineQueries.InlineQueryResult.abstracts.InlineQueryResult
 import dev.inmo.tgbotapi.types.InlineQueries.abstracts.InlineQuery
 import me.madhead.imgmacrobot.core.EmptyParsedInlineQuery
-import me.madhead.imgmacrobot.core.ImageMacroGenerationPipeline
-import me.madhead.imgmacrobot.core.ImageMacroGenerator
-import me.madhead.imgmacrobot.core.ParsedInlineQuery
 import me.madhead.imgmacrobot.core.ParsingImageMacroGenerator
 import me.madhead.imgmacrobot.imgur.ImageUploadRequest
 import me.madhead.imgmacrobot.imgur.ImageUploadResponseBodyDataSuccess

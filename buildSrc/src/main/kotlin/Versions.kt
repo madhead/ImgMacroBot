@@ -24,6 +24,7 @@ object Versions {
         const val KOTLINX_SERIALIZATION = "1.0.1"
         const val TGBOTAPI = "0.30.0"
         const val SKIJA = "0.89.18"
+        const val MICROMETER = "1.6.4"
         const val LOG4J = "2.14.0"
         const val JUNIT = "5.7.1"
         const val MOCKK = "1.10.6"
