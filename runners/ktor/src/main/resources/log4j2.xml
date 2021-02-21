@@ -1,11 +1,11 @@
 <Configuration status="WARN" shutdownHook="disable">
 	<Appenders>
 		<Console name="STDOUT" target="SYSTEM_OUT">
-			<PatternLayout>
-				<Pattern>
-					​%d{ISO8601}{UTC} [%-5p] [%t] [%c{1.}]: %m%n
-				</Pattern>>
-			</PatternLayout>
+			<JsonLayout>
+				<Complete>false</Complete>
+				<Compact>true</Compact>
+				<EventEol>true</EventEol>
+			</JsonLayout>
 		</Console>
 	</Appenders>
 

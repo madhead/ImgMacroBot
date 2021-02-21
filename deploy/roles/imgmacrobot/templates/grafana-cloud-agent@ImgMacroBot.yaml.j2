@@ -37,10 +37,6 @@ loki:
           relabel_configs:
             - source_labels: ['__journal__systemd_unit']
               target_label: 'unit'
-          pipeline_stages:
-            - multiline:
-                firstline: '^\x{200B}'
-                max_lines: 9999
       clients:
         - url: 'https://{{ grafana.cloud.loki.host }}/api/prom/push'
           basic_auth:
