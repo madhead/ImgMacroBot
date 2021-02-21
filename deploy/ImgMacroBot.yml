@@ -7,12 +7,20 @@
     - role: geerlingguy.java
       java_packages: openjdk-{{ java.version }}-jre-headless
       become: yes
+      tags:
+        - java
     - role: nginxinc.nginx
       become: yes
+      tags:
+        - nginx
     - role: nginxinc.nginx_config
       nginx_config_cleanup: true
       nginx_config_cleanup_files:
         - /etc/nginx/conf.d/default.conf
       become: yes
-    - role: ImgMacroBot
+      tags:
+        - nginx_config
+    - role: imgmacrobot
       become: yes
+      tags:
+        - imgmacrobot

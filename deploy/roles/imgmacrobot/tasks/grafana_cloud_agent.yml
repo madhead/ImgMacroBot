@@ -1,0 +1,80 @@
+- name: Ensure Grafana Cloud Agent systemd unit stopped
+  ansible.builtin.systemd:
+    name: 'grafana-cloud-agent@{{ name }}'
+    state: stopped
+  ignore_errors: yes
+
+- name: Ensure Grafana Cloud Agent account exists
+  ansible.builtin.user:
+    name: '{{ grafana.cloud.agent.user }}'
+    groups:
+      - systemd-journal
+    append: true
+    state: present
+    system: true
+    create_home: false
+
+- name: Ensure Grafana Cloud Agent directory exists
+  ansible.builtin.file:
+    path: '{{ grafana.cloud.agent.directory }}'
+    owner: '{{ grafana.cloud.agent.user }}'
+    group: '{{ grafana.cloud.agent.user }}'
+    state: directory
+    mode: 0755
+
+- name: Stat Grafana Cloud Agent
+  ansible.builtin.stat:
+    path: '{{ grafana.cloud.agent.directory }}/agent-linux-amd64'
+  register: grafana_cloud_agent_stat
+
+- name: Ensure Grafana Cloud Agent installed
+  ansible.builtin.unarchive:
+    remote_src: yes
+    src: 'https://github.com/grafana/agent/releases/download/v{{ grafana.cloud.agent.version }}/agent-linux-amd64.zip'
+    dest: '{{ grafana.cloud.agent.directory }}'
+    owner: '{{ grafana.cloud.agent.user }}'
+    group: '{{ grafana.cloud.agent.user }}'
+    mode: 0755
+  when: (grafana_cloud_agent_stat.stat.checksum | default(None) != grafana.cloud.agent.checksum) or
+    (grafana_cloud_agent_stat.stat.pw_name | default(None) != grafana.cloud.agent.user) or
+    (grafana_cloud_agent_stat.stat.gr_name | default(None) != grafana.cloud.agent.user) or
+    (grafana_cloud_agent_stat.stat.mode | default(None) != '0755')
+
+- name: Ensure Grafana Cloud Agent Loki positions directory exists
+  ansible.builtin.file:
+    path: '{{ grafana.cloud.agent.config.loki.positions_directory }}'
+    owner: '{{ grafana.cloud.agent.user }}'
+    group: '{{ grafana.cloud.agent.user }}'
+    state: directory
+    mode: 0755
+
+- name: Ensure Grafana Cloud Agent config directory exists
+  ansible.builtin.file:
+    path: '{{ grafana.cloud.agent.config.directory }}'
+    owner: '{{ grafana.cloud.agent.user }}'
+    group: '{{ grafana.cloud.agent.user }}'
+    state: directory
+    mode: 0755
+
+- name: Ensure Grafana Cloud Agent config
+  ansible.builtin.template:
+    src: 'grafana-cloud-agent@{{ name }}.yaml.j2'
+    dest: '{{ grafana.cloud.agent.config.directory }}/{{ name }}.yml'
+    owner: '{{ grafana.cloud.agent.user }}'
+    group: '{{ grafana.cloud.agent.user }}'
+    mode: 0644
+
+- name: Ensure Grafana Cloud Agent systemd unit
+  ansible.builtin.template:
+    src: 'grafana-cloud-agent@.service.j2'
+    dest: /etc/systemd/system/grafana-cloud-agent@.service
+    owner: '{{ grafana.cloud.agent.user }}'
+    group: '{{ grafana.cloud.agent.user }}'
+    mode: 0644
+
+- name: Ensure Grafana Cloud Agent systemd unit enabled & started
+  ansible.builtin.systemd:
+    name: 'grafana-cloud-agent@{{ name }}'
+    state: started
+    enabled: yes
+    daemon_reload: true
