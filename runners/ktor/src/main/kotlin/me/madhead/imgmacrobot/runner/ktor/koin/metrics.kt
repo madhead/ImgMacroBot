@@ -1,9 +1,11 @@
 package me.madhead.imgmacrobot.runner.ktor.koin
 
 import io.ktor.config.ApplicationConfig
+import io.micrometer.core.instrument.MultiGauge
 import io.micrometer.core.instrument.config.MeterFilter
 import io.micrometer.prometheus.PrometheusConfig
 import io.micrometer.prometheus.PrometheusMeterRegistry
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 /**
@@ -25,4 +27,14 @@ val metricsModule = module {
             }))
         }
     }
+
+    single(named(IMGUR_RATE_LIMITS)) {
+        MultiGauge
+                .builder("imgur")
+                .description("Imgur API rate limits")
+                .baseUnit("credits")
+                .register(get<PrometheusMeterRegistry>())
+    }
 }
+
+internal const val IMGUR_RATE_LIMITS = "IMGUR_RATE_LIMITS"

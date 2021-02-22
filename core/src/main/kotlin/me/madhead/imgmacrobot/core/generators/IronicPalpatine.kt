@@ -6,7 +6,6 @@ import dev.inmo.tgbotapi.types.InlineQueries.abstracts.InlineQuery
 import me.madhead.imgmacrobot.core.EmptyParsedInlineQuery
 import me.madhead.imgmacrobot.core.ParsingImageMacroGenerator
 import me.madhead.imgmacrobot.imgur.ImageUploadRequest
-import me.madhead.imgmacrobot.imgur.ImageUploadResponseBodyDataSuccess
 import me.madhead.imgmacrobot.imgur.Imgur
 import org.apache.logging.log4j.LogManager
 import java.nio.file.Path
@@ -43,21 +42,17 @@ class IronicPalpatine(
                     image = file.readBytes(),
                     name = "ironic.jpeg"
             ))
-            val data = upload.body.data
+            val data = upload.data
 
             logger.debug("Imgur upload result: {}", data)
 
-            if (data !is ImageUploadResponseBodyDataSuccess) {
-                null
-            } else {
-                InlineQueryResultPhotoImpl(
-                        id = UUID.randomUUID().toString(),
-                        url = data.link,
-                        thumbUrl = data.link,
-                        width = data.width,
-                        height = data.height,
-                )
-            }
+            InlineQueryResultPhotoImpl(
+                    id = UUID.randomUUID().toString(),
+                    url = data.link,
+                    thumbUrl = data.link,
+                    width = data.width,
+                    height = data.height,
+            )
         }
     }
 }
