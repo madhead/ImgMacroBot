@@ -7,4 +7,4 @@ logo.png
 
 templates/*.xcf
 
-deploy/.env
+.env
