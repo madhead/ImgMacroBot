@@ -17,3 +17,8 @@
   ansible.builtin.import_tasks: https.yml
   tags:
     - https
+
+- name: Configure Grafana
+  ansible.builtin.import_tasks: grafana.yml
+  tags:
+    - grafana

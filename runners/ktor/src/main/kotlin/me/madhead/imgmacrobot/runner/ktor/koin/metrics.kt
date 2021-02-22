@@ -10,6 +10,8 @@ import org.koin.dsl.module
  */
 val metricsModule = module {
     single {
-        PrometheusMeterRegistry(PrometheusConfig.DEFAULT)
+        PrometheusMeterRegistry(PrometheusConfig.DEFAULT).also {
+            it.config().commonTags("application", "ImgMacroBot")
+        }
     }
 }

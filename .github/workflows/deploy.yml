@@ -39,8 +39,6 @@ jobs:
 
       - run: sudo apt update && sudo apt install ansible
       - run: pip install oci
-      - run: ansible-galaxy collection install community.crypto
-      - run: ansible-galaxy collection install oracle.oci
       - run: ansible-galaxy install -r requirements.yml
         working-directory: deploy
 

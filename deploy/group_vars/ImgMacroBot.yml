@@ -35,3 +35,6 @@ grafana:
       host: logs-prod-us-central1.grafana.net
       user: "{{ lookup('env', 'GRAFANA_CLOUD_LOKI_USER') }}"
       password: "{{ lookup('env', 'GRAFANA_CLOUD_LOKI_PASSWORD') }}"
+    grafana:
+      url: "{{ lookup('env', 'GRAFANA_CLOUD_GRAFANA_URL') }}"
+      api_key: "{{ lookup('env', 'GRAFANA_CLOUD_GRAFANA_API_KEY') }}"

@@ -1,0 +1,92 @@
+{
+	"id": null,
+	"uid": null,
+	"title": "Overview",
+	"tags": [
+		"ImgMacroBot",
+		"overview"
+	],
+	"style": "dark",
+	"timezone": "utc",
+	"editable": true,
+	"time": {
+		"from": "now-3h",
+		"to": "now"
+	},
+	"refresh": "1m",
+	"schemaVersion": 27,
+	"version": 1,
+	"panels": [
+		{
+			"id": 1,
+			"type": "timeseries",
+			"title": "Webhooks per minute",
+			"transparent": true,
+			"gridPos": {
+				"w": 24,
+				"h": 7,
+				"x": 0,
+				"y": 0
+			},
+			"datasource": "grafanacloud-madhead-prom",
+			"fieldConfig": {
+				"defaults": {
+					"color": {
+						"mode": "palette-classic"
+					},
+					"custom": {
+						"axisLabel": "",
+						"axisPlacement": "left",
+						"barAlignment": 0,
+						"drawStyle": "line",
+						"fillOpacity": 20,
+						"gradientMode": "none",
+						"hideFrom": {
+							"graph": false,
+							"legend": false,
+							"tooltip": false
+						},
+						"lineInterpolation": "smooth",
+						"lineStyle": {
+							"fill": "solid"
+						},
+						"lineWidth": 1,
+						"pointSize": 5,
+						"scaleDistribution": {
+							"type": "linear"
+						},
+						"showPoints": "never",
+						"spanNulls": true
+					},
+					"mappings": [],
+					"unit": "short"
+				},
+				"overrides": []
+			},
+			"options": {
+				"graph": {},
+				"legend": {
+					"calcs": [],
+					"displayMode": "hidden",
+					"placement": "bottom"
+				},
+				"tooltipOptions": {
+					"mode": "single"
+				}
+			},
+			"pluginVersion": "7.4.2",
+			"targets": [
+				{
+					"exemplar": false,
+					"expr": "increase(ktor_http_server_requests_seconds_count{route=\"/webhook\"}[1m])",
+					"format": "time_series",
+					"instant": false,
+					"interval": "",
+					"intervalFactor": 1,
+					"legendFormat": "",
+					"refId": "RPM"
+				}
+			]
+		}
+	]
+}
