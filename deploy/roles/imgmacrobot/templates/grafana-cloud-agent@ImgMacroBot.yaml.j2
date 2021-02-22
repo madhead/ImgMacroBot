@@ -42,3 +42,15 @@ loki:
           basic_auth:
             username: '{{ grafana.cloud.loki.user }}'
             password: '{{ grafana.cloud.loki.password }}'
+
+integrations:
+  node_exporter:
+    enabled: true
+    enable_collectors:
+      - processes
+      - systemd
+  prometheus_remote_write:
+    - url: https://{{ grafana.cloud.prometheus.host }}/api/prom/push
+      basic_auth:
+        username: '{{ grafana.cloud.prometheus.user }}'
+        password: '{{ grafana.cloud.prometheus.password }}'
