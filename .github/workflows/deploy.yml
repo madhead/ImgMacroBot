@@ -37,8 +37,8 @@ jobs:
       - run: unzip templates.zip
       - run: unzip fonts.zip
 
-      - run: sudo apt update && sudo apt install ansible
-      - run: pip install oci
+      - run: sudo apt remove ansible
+      - run: sudo pip install ansible oci
       - run: ansible-galaxy install -r requirements.yml
         working-directory: deploy
 
