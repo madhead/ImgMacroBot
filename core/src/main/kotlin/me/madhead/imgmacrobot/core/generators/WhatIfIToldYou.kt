@@ -126,12 +126,6 @@ class WhatIfIToldYou(
         val snapshot = surface.makeImageSnapshot() ?: return null
         val data = snapshot.encodeToData(EncodedImageFormat.JPEG, 95) ?: return null
 
-        val tmpFile = File.createTempFile("ImgMacroBot", ".jpeg")
-
-        tmpFile.writeBytes(data.bytes)
-
-        logger.info("Temp file: {}", tmpFile)
-
         val upload = imgur.imageUpload(ImageUploadRequest(
                 image = data.bytes,
                 name = "what if i told you.jpeg"

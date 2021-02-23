@@ -75,10 +75,13 @@ class KtorImgur(
                                 value = request.image,
                                 headers = Headers.build {
                                     request.name?.let {
-                                        this[HttpHeaders.ContentDisposition] = "filename=${request.name}"
+                                        this[HttpHeaders.ContentDisposition] = "filename=\"${request.name}\""
                                     }
                                 }
                         )
+                        request.name?.let {
+                            append("name", it)
+                        }
                         request.title?.let {
                             append("title", it)
                         }
