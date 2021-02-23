@@ -4,5 +4,5 @@ plugins {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:${Versions.Dependencies.KOTLINX_SERIALIZATION}")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:${Versions.Dependencies.KOTLINX_SERIALIZATION}")
 }

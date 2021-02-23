@@ -1,0 +1,32 @@
+- name: Copy Grafana configuration
+  ansible.builtin.copy:
+    remote_src: false
+    src: '{{ playbook_dir }}/../monitoring/'
+    dest: '/tmp/monitoring/'
+
+- name: Ensure {{ name }} folder exists
+  community.grafana.grafana_folder:
+    name: '{{ name }}'
+    state: present
+    url: '{{ grafana.cloud.grafana.url }}'
+    grafana_api_key: '{{ grafana.cloud.grafana.api_key }}'
+
+- name: Ensure overview dashboard exists
+  community.grafana.grafana_dashboard:
+    state: present
+    folder: '{{ name }}'
+    path: '/tmp/monitoring/grafana/dashboards/overview.json'
+    overwrite: yes
+    commit_message: Updated by Ansible
+    grafana_url: '{{ grafana.cloud.grafana.url }}'
+    grafana_api_key: '{{ grafana.cloud.grafana.api_key }}'
+
+#- name: Ensure Micrometer-sourced JVM dashboard exists
+#  community.grafana.grafana_dashboard:
+#    state: present
+#    folder: '{{ name }}'
+#    dashboard_id: 4701
+#    overwrite: yes
+#    commit_message: Updated by Ansible
+#    grafana_url: '{{ grafana.cloud.grafana.url }}'
+#    grafana_api_key: '{{ grafana.cloud.grafana.api_key }}'

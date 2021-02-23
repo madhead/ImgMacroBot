@@ -1,7 +1,9 @@
 package me.madhead.imgmacrobot.runner.ktor.koin
 
+import io.ktor.config.ApplicationConfig
 import me.madhead.imgmacrobot.imgur.Imgur
 import me.madhead.imgmacrobot.imgur.ktor.KtorImgur
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 /**
@@ -9,6 +11,9 @@ import org.koin.dsl.module
  */
 val imgurModule = module {
     single<Imgur> {
-        KtorImgur()
+        KtorImgur(
+                get<ApplicationConfig>().property("imgur.clientId").getString(),
+                get(named(IMGUR_RATE_LIMITS)),
+        )
     }
 }

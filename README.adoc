@@ -1,3 +1,54 @@
 = https://t.me/ImgMacroBot[ImgMacroBot]
 
 Telegram inline bot who helps you generate your favourite image macros on the fly.
+
+== Running locally
+
+. Define the required environment variables in `.env` file in the root of the project.
+The variables are:
+`TELEGRAM_TOKEN`::
+https://core.telegram.org/bots/api[Telegram Bot API] token.
+`TEMPLATES_DIR`::
+Absolute path to the link:templates[`templates`] directory of this project.
+`FONTS_DIR`::
+Absolute path to the link:fonts[`fonts`] directory of this project.
+`IMGUR_CLIENT_ID`::
+https://apidocs.imgur.com[Imgur API] client ID.
+`IMGMACROBOT_LOG_THRESHOLD`::
+Optional.
+Logging threshold: logs with levels below given won't be logged.
+`DEBUG` is a good value for development, `INFO` is used in production.
+`PORT`::
+Optional.
+Port to bind to.
+If no value given, `5000` will be used.
+
+. Start https://ngrok.com[`ngrok`] with the given port, like:
++
+[source,bash]
+----
+ngrok http 5000
+----
+
+. Configure Telegram Bot API webhook with ngrok:
++
+[source,bash]
+----
+curl --location --request POST 'https://api.telegram.org/bot${TELEGRAM_TOKEN}/setWebhook' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+	"url": "https://${NGROK}.ngrok.io/${TELEGRAM_TOKEN}"
+}
+'
+----
++
+Don't forget to replace the placeholders.
+
+. Start the bot:
++
+[source,bash]
+----
+source .env && ./gradlew :runner:ktor:run
+----
+
+. The bot is running!

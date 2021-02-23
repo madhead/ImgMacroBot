@@ -2,34 +2,6 @@ package me.madhead.imgmacrobot.imgur
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.JsonContentPolymorphicSerializer
-import kotlinx.serialization.json.JsonElement
-import kotlinx.serialization.json.jsonObject
-
-/**
- * Imgur's image upload response body.
- */
-@Serializable(with = ImageUploadResponseBodyDataSerializer::class)
-sealed class ImageUploadResponseBodyData
-
-/**
- * Unsuccessful response.
- *
- * @property error error details.
- * @property request requested path.
- * @property method request method.
- */
-@Serializable
-data class ImageUploadResponseBodyDataError(
-        @SerialName("error")
-        val error: String,
-
-        @SerialName("request")
-        val request: String,
-
-        @SerialName("method")
-        val method: String,
-) : ImageUploadResponseBodyData()
 
 /**
  * Successful response.
@@ -57,7 +29,7 @@ data class ImageUploadResponseBodyDataError(
  * @property hls unknown field.
  */
 @Serializable
-data class ImageUploadResponseBodyDataSuccess(
+data class ImageUploadResponseData(
         @SerialName("id")
         val id: String,
 
@@ -144,13 +116,4 @@ data class ImageUploadResponseBodyDataSuccess(
 
         @SerialName("hls")
         val hls: String,
-) : ImageUploadResponseBodyData()
-
-private object ImageUploadResponseBodyDataSerializer : JsonContentPolymorphicSerializer<ImageUploadResponseBodyData>(
-        ImageUploadResponseBodyData::class
-) {
-    override fun selectDeserializer(element: JsonElement) = when {
-        "error" in element.jsonObject -> ImageUploadResponseBodyDataError.serializer()
-        else -> ImageUploadResponseBodyDataSuccess.serializer()
-    }
-}
+)

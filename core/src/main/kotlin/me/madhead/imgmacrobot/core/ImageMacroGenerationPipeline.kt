@@ -7,15 +7,8 @@ import dev.inmo.tgbotapi.types.update.abstracts.Update
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.supervisorScope
-import kotlinx.coroutines.time.delay
 import kotlinx.coroutines.withTimeout
-import kotlinx.coroutines.withTimeoutOrNull
 import org.apache.logging.log4j.LogManager
-import java.time.Duration
 
 /**
  * [Telegram's Bot API updates](https://core.telegram.org/bots/api#getting-updates) processor. It responds with a list of generated image

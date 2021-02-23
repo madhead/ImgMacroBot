@@ -6,33 +6,27 @@ import dev.inmo.tgbotapi.types.InlineQueries.abstracts.InlineQuery
 import me.madhead.imgmacrobot.core.ParsedInlineQuery
 import me.madhead.imgmacrobot.core.ParsingImageMacroGenerator
 import me.madhead.imgmacrobot.imgur.ImageUploadRequest
-import me.madhead.imgmacrobot.imgur.ImageUploadResponseBodyDataSuccess
 import me.madhead.imgmacrobot.imgur.Imgur
 import org.apache.logging.log4j.LogManager
 import org.jetbrains.skija.Data
 import org.jetbrains.skija.EncodedImageFormat
 import org.jetbrains.skija.FontMgr
-import org.jetbrains.skija.FontStyle
 import org.jetbrains.skija.Image
 import org.jetbrains.skija.Surface
 import org.jetbrains.skija.Typeface
 import org.jetbrains.skija.paragraph.Alignment
 import org.jetbrains.skija.paragraph.FontCollection
-import org.jetbrains.skija.paragraph.HeightMode
 import org.jetbrains.skija.paragraph.ParagraphBuilder
 import org.jetbrains.skija.paragraph.ParagraphStyle
 import org.jetbrains.skija.paragraph.Shadow
-import org.jetbrains.skija.paragraph.StrutStyle
 import org.jetbrains.skija.paragraph.TextStyle
 import org.jetbrains.skija.paragraph.TypefaceFontProvider
+import java.io.File
 import java.nio.file.Path
 import java.util.UUID
 import kotlin.io.path.ExperimentalPathApi
-import kotlin.io.path.Path
 import kotlin.io.path.isRegularFile
 import kotlin.io.path.readBytes
-import kotlin.io.path.writeBytes
-import kotlin.math.abs
 
 /**
  * Morpheus from the "The Matrix" trying to tell you something.
@@ -130,26 +124,23 @@ class WhatIfIToldYou(
         }
 
         val snapshot = surface.makeImageSnapshot() ?: return null
-        val data = snapshot.encodeToData(EncodedImageFormat.JPEG, 100) ?: return null
+        val data = snapshot.encodeToData(EncodedImageFormat.JPEG, 95) ?: return null
+
         val upload = imgur.imageUpload(ImageUploadRequest(
                 image = data.bytes,
                 name = "what if i told you.jpeg"
         ))
-        val responseData = upload.body.data
+        val responseData = upload.data
 
         logger.debug("Imgur upload result: {}", responseData)
 
-        return if (responseData !is ImageUploadResponseBodyDataSuccess) {
-            null
-        } else {
-            InlineQueryResultPhotoImpl(
-                    id = UUID.randomUUID().toString(),
-                    url = responseData.link,
-                    thumbUrl = responseData.link,
-                    width = responseData.width,
-                    height = responseData.height,
-            )
-        }
+        return InlineQueryResultPhotoImpl(
+                id = UUID.randomUUID().toString(),
+                url = responseData.link,
+                thumbUrl = responseData.link,
+                width = responseData.width,
+                height = responseData.height,
+        )
     }
 }
 

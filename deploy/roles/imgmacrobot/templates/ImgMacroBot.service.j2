@@ -9,7 +9,7 @@ After=network.target remote-fs.target
 Type=simple
 User={{ bot.user }}
 Group={{ bot.user }}
-EnvironmentFile=/etc/{{ bot.config }}
+EnvironmentFile=/etc/{{ name }}.env
 ExecStart={{ bot.directory }}/bin/ImgMacroBot
 Restart=always
 

@@ -6,13 +6,37 @@ java:
 pki:
   directory: /etc/pki
 
+name: ImgMacroBot
+
 bot:
-  user: imgmacrobot
-  directory: /opt/ImgMacroBot
+  user: '{{ name | lower }}'
+  directory: /opt/{{ name }}
   port: 5001
-  config: ImgMacroBot.env
-  service: ImgMacroBot.service
-  java:
-    home: /usr/lib/jvm/java-{{ java.version }}-openjdk-amd64
   telegram:
     token: "{{ lookup('env', 'TELEGRAM_TOKEN') }}"
+  imgur:
+    clientId: "{{ lookup('env', 'IMGUR_CLIENT_ID') }}"
+
+grafana:
+  cloud:
+    agent:
+      user: grafana_cloud_agent
+      version: 0.12.0
+      checksum: 13bae0123f8e6007842a82fc2fd41b4f3bd22bc8
+      directory: /opt/grafana-cloud-agent
+      port: 9080
+      config:
+        directory: /etc/grafana-agent
+        loki:
+          positions_directory: /var/log/grafana-cloud-agent/loki.positions
+    prometheus:
+      host: prometheus-us-central1.grafana.net
+      user: "{{ lookup('env', 'GRAFANA_CLOUD_PROMETHEUS_USER') }}"
+      password: "{{ lookup('env', 'GRAFANA_CLOUD_PROMETHEUS_PASSWORD') }}"
+    loki:
+      host: logs-prod-us-central1.grafana.net
+      user: "{{ lookup('env', 'GRAFANA_CLOUD_LOKI_USER') }}"
+      password: "{{ lookup('env', 'GRAFANA_CLOUD_LOKI_PASSWORD') }}"
+    grafana:
+      url: "{{ lookup('env', 'GRAFANA_CLOUD_GRAFANA_URL') }}"
+      api_key: "{{ lookup('env', 'GRAFANA_CLOUD_GRAFANA_API_KEY') }}"

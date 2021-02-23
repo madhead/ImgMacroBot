@@ -1,0 +1,92 @@
+- name: Ensure bot systemd unit stopped
+  ansible.builtin.systemd:
+    name: '{{ name }}'
+    state: stopped
+  ignore_errors: yes
+
+- name: Ensure bot account exists
+  ansible.builtin.user:
+    name: '{{ bot.user }}'
+    state: present
+    system: true
+    create_home: false
+
+- name: Remove bot installation directory
+  ansible.builtin.file:
+    path: '{{ bot.directory }}'
+    state: absent
+
+- name: Ensure bot installation directory exists
+  ansible.builtin.file:
+    path: '{{ bot.directory }}'
+    owner: '{{ bot.user }}'
+    group: '{{ bot.user }}'
+    state: directory
+    mode: 0755
+
+- name: Ensure templates directory exists
+  ansible.builtin.file:
+    path: '{{ bot.directory }}/templates'
+    owner: '{{ bot.user }}'
+    group: '{{ bot.user }}'
+    state: directory
+    mode: 0755
+
+- name: Ensure fonts directory exists
+  ansible.builtin.file:
+    path: '{{ bot.directory }}/fonts'
+    owner: '{{ bot.user }}'
+    group: '{{ bot.user }}'
+    state: directory
+    mode: 0755
+
+- name: Ensure bot installation
+  ansible.builtin.unarchive:
+    remote_src: false
+    src: '{{ playbook_dir }}/../runners/ktor/build/distributions/ImgMacroBot.tar'
+    dest: '{{ bot.directory }}'
+    extra_opts:
+      - --strip-components=1
+    owner: '{{ bot.user }}'
+    group: '{{ bot.user }}'
+
+- name: Ensure template files
+  ansible.builtin.copy:
+    remote_src: false
+    src: '{{ playbook_dir }}/../templates/'
+    dest: '{{ bot.directory }}/templates'
+    owner: '{{ bot.user }}'
+    group: '{{ bot.user }}'
+    mode: 0444
+
+- name: Ensure font files
+  ansible.builtin.copy:
+    remote_src: false
+    src: '{{ playbook_dir }}/../fonts/'
+    dest: '{{ bot.directory }}/fonts'
+    owner: '{{ bot.user }}'
+    group: '{{ bot.user }}'
+    mode: 0444
+
+- name: Ensure service environment
+  ansible.builtin.template:
+    src: '{{ name }}.env.j2'
+    dest: /etc/{{ name }}.env
+    owner: '{{ bot.user }}'
+    group: '{{ bot.user }}'
+    mode: 0644
+
+- name: Ensure service systemd unit
+  ansible.builtin.template:
+    src: '{{ name }}.service.j2'
+    dest: /etc/systemd/system/{{ name }}.service
+    owner: '{{ bot.user }}'
+    group: '{{ bot.user }}'
+    mode: 0644
+
+- name: Ensure bot systemd unit enabled & started
+  ansible.builtin.systemd:
+    name: '{{ name }}'
+    state: started
+    enabled: yes
+    daemon_reload: true

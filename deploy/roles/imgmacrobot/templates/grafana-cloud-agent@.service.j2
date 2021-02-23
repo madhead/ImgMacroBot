@@ -1,0 +1,16 @@
+# {{ ansible_managed }}
+
+[Unit]
+Description=%i Grafana Cloud Agent
+Requires=network.target remote-fs.target
+After=network.target remote-fs.target
+
+[Service]
+Type=simple
+User={{ grafana.cloud.agent.user }}
+Group={{ grafana.cloud.agent.user }}
+ExecStart={{ grafana.cloud.agent.directory }}/agent-linux-amd64 --config.file={{ grafana.cloud.agent.config.directory }}/%i.yml
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

@@ -39,8 +39,6 @@ jobs:
 
       - run: sudo apt update && sudo apt install ansible
       - run: pip install oci
-      - run: ansible-galaxy collection install community.crypto
-      - run: ansible-galaxy collection install oracle.oci
       - run: ansible-galaxy install -r requirements.yml
         working-directory: deploy
 
@@ -64,3 +62,10 @@ jobs:
         env:
           ANSIBLE_HOST_KEY_CHECKING: false
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          GRAFANA_CLOUD_PROMETHEUS_USER: ${{ secrets.GRAFANA_CLOUD_PROMETHEUS_USER }}
+          GRAFANA_CLOUD_PROMETHEUS_PASSWORD: ${{ secrets.GRAFANA_CLOUD_PROMETHEUS_PASSWORD }}
+          GRAFANA_CLOUD_LOKI_USER: ${{ secrets.GRAFANA_CLOUD_LOKI_USER }}
+          GRAFANA_CLOUD_LOKI_PASSWORD: ${{ secrets.GRAFANA_CLOUD_LOKI_PASSWORD }}
+          GRAFANA_CLOUD_GRAFANA_URL: ${{ secrets.GRAFANA_CLOUD_GRAFANA_URL }}
+          GRAFANA_CLOUD_GRAFANA_API_KEY: ${{ secrets.GRAFANA_CLOUD_GRAFANA_API_KEY }}
+          IMGUR_CLIENT_ID: ${{ secrets.IMGUR_CLIENT_ID }}

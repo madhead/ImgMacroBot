@@ -1,0 +1,56 @@
+# {{ ansible_managed }}
+
+server:
+  http_listen_port: {{ bot.port + 1 }}
+  grpc_listen_port: {{ bot.port + 2 }}
+
+prometheus:
+  global:
+    external_labels:
+      host: {{ ansible_facts.hostname }}
+  wal_directory: /tmp/grafana_cloud_agent
+  wal_cleanup_age: 6h
+  configs:
+    - name: {{ name }}
+      scrape_configs:
+        - job_name: {{ name }}
+          scrape_interval: 5s
+          metrics_path: /metrics
+          static_configs:
+            - targets:
+                - localhost:{{ bot.port }}
+      remote_write:
+        - url: https://{{ grafana.cloud.prometheus.host }}/api/prom/push
+          basic_auth:
+            username: '{{ grafana.cloud.prometheus.user }}'
+            password: '{{ grafana.cloud.prometheus.password }}'
+
+loki:
+  positions_directory: {{ grafana.cloud.agent.config.loki.positions_directory }}
+  configs:
+    - name: {{ name }}
+      scrape_configs:
+        - job_name: journal
+          journal:
+            labels:
+              journal: true
+          relabel_configs:
+            - source_labels: ['__journal__systemd_unit']
+              target_label: 'unit'
+      clients:
+        - url: 'https://{{ grafana.cloud.loki.host }}/api/prom/push'
+          basic_auth:
+            username: '{{ grafana.cloud.loki.user }}'
+            password: '{{ grafana.cloud.loki.password }}'
+
+integrations:
+  node_exporter:
+    enabled: true
+    enable_collectors:
+      - processes
+      - systemd
+  prometheus_remote_write:
+    - url: https://{{ grafana.cloud.prometheus.host }}/api/prom/push
+      basic_auth:
+        username: '{{ grafana.cloud.prometheus.user }}'
+        password: '{{ grafana.cloud.prometheus.password }}'

@@ -1,0 +1,11 @@
+- name: Ensure OpenGL is installed
+  ansible.builtin.apt:
+    name: libgl1
+    state: latest
+    update_cache: true
+
+- name: Ensure unzip is installed
+  ansible.builtin.apt:
+    name: unzip
+    state: latest
+    update_cache: true

@@ -1,3 +1,7 @@
-- name: geerlingguy.java
-- name: nginxinc.nginx
-- name: nginxinc.nginx_config
+collections:
+  - name: community.crypto
+  - name: community.grafana
+  - name: nginxinc.nginx_core
+  - name: oracle.oci
+roles:
+  - name: geerlingguy.java

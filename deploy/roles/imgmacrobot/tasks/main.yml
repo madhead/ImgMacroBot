@@ -1,0 +1,24 @@
+- name: Preconfiguration
+  ansible.builtin.import_tasks: requirements.yml
+  tags:
+    - requirements
+
+- name: Configure the bot
+  ansible.builtin.import_tasks: bot.yml
+  tags:
+    - bot
+
+- name: Configure Grafana Cloud Agent
+  ansible.builtin.import_tasks: grafana_cloud_agent.yml
+  tags:
+    - grafana_cloud_agent
+
+- name: Configure HTTPS
+  ansible.builtin.import_tasks: https.yml
+  tags:
+    - https
+
+#- name: Configure Grafana
+#  ansible.builtin.import_tasks: grafana.yml
+#  tags:
+#    - grafana

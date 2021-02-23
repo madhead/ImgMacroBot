@@ -6,3 +6,5 @@ build
 logo.png
 
 templates/*.xcf
+
+.env

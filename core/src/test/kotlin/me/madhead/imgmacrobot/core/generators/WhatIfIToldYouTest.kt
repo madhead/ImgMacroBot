@@ -5,17 +5,14 @@ import dev.inmo.tgbotapi.types.CommonUser
 import dev.inmo.tgbotapi.types.InlineQueries.abstracts.InlineQuery
 import dev.inmo.tgbotapi.types.InlineQueries.query.BaseInlineQuery
 import io.mockk.mockk
-import kotlinx.coroutines.runBlocking
 import me.madhead.imgmacrobot.imgur.Imgur
 import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import java.nio.file.Path
 import kotlin.io.path.ExperimentalPathApi
-import kotlin.io.path.Path
 
 @ExperimentalPathApi
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
