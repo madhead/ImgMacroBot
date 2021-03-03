@@ -11,6 +11,10 @@ import org.apache.logging.log4j.LogManager
 import org.jetbrains.skija.Data
 import org.jetbrains.skija.EncodedImageFormat
 import org.jetbrains.skija.FontMgr
+import org.jetbrains.skija.FontSlant
+import org.jetbrains.skija.FontStyle
+import org.jetbrains.skija.FontWeight
+import org.jetbrains.skija.FontWidth
 import org.jetbrains.skija.Image
 import org.jetbrains.skija.Surface
 import org.jetbrains.skija.Typeface
@@ -57,7 +61,7 @@ class WhatIfIToldYou(
 
         // TODO: Caching fonts
         val templatePath = templatesDir.resolve("WhatIfIToldYou.png").takeIf { it.isRegularFile() } ?: return null
-        val fontPath = fontsDir.resolve("Anton.ttf").takeIf { it.isRegularFile() } ?: return null
+        val fontPath = fontsDir.resolve("Oswald.ttf").takeIf { it.isRegularFile() } ?: return null
         val template = Image.makeFromEncoded(templatePath.readBytes()) ?: return null
         val fontData = Data.makeFromBytes(fontPath.readBytes()) ?: return null
         val font = Typeface.makeFromData(fontData)
@@ -79,7 +83,8 @@ class WhatIfIToldYou(
                 val textStyle = TextStyle().apply {
                     color = 0xFFFFFFFF.toInt()
                     fontSize = 48F
-                    setFontFamily("Anton")
+                    fontStyle = FontStyle(FontWeight.BLACK, FontWidth.CONDENSED, FontSlant.UPRIGHT)
+                    setFontFamily("Oswald")
                     addShadows(arrayOf(
                             Shadow(0xFF000000.toInt(), 1F, 0F, 2.toDouble()),
                             Shadow(0xFF000000.toInt(), 0F, 1F, 2.toDouble()),
@@ -104,7 +109,8 @@ class WhatIfIToldYou(
                 val textStyle = TextStyle().apply {
                     color = 0xFFFFFFFF.toInt()
                     fontSize = 48F
-                    setFontFamily("Anton")
+                    fontStyle = FontStyle(FontWeight.BLACK, FontWidth.CONDENSED, FontSlant.UPRIGHT)
+                    setFontFamily("Oswald")
                     addShadows(arrayOf(
                             Shadow(0xFF000000.toInt(), 1F, 0F, 2.toDouble()),
                             Shadow(0xFF000000.toInt(), 0F, 1F, 2.toDouble()),
