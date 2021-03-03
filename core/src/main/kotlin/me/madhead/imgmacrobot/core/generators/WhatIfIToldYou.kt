@@ -25,7 +25,6 @@ import org.jetbrains.skija.paragraph.ParagraphStyle
 import org.jetbrains.skija.paragraph.Shadow
 import org.jetbrains.skija.paragraph.TextStyle
 import org.jetbrains.skija.paragraph.TypefaceFontProvider
-import java.io.File
 import java.nio.file.Path
 import java.util.UUID
 import kotlin.io.path.ExperimentalPathApi
@@ -38,9 +37,9 @@ import kotlin.io.path.readBytes
 @ExperimentalPathApi
 @Suppress("LongMethod", "MagicNumber", "ForbiddenComment", "ComplexMethod", "ReturnCount")
 class WhatIfIToldYou(
-        private val templatesDir: Path,
-        private val fontsDir: Path,
-        private val imgur: Imgur,
+    private val templatesDir: Path,
+    private val fontsDir: Path,
+    private val imgur: Imgur,
 ) : ParsingImageMacroGenerator<WhatIfIToldYouParsedInlineQuery> {
     companion object {
         private val logger = LogManager.getLogger(WhatIfIToldYou::class.java)!!
@@ -49,11 +48,11 @@ class WhatIfIToldYou(
 
     override fun parseInlineQuery(inlineQuery: InlineQuery): WhatIfIToldYouParsedInlineQuery? {
         return regex
-                .matchEntire(inlineQuery.query)
-                ?.destructured
-                ?.let { (whatIfIToldMeWhat) ->
-                    WhatIfIToldYouParsedInlineQuery(whatIfIToldMeWhat)
-                }
+            .matchEntire(inlineQuery.query)
+            ?.destructured
+            ?.let { (whatIfIToldMeWhat) ->
+                WhatIfIToldYouParsedInlineQuery(whatIfIToldMeWhat)
+            }
     }
 
     override suspend fun generate(parsedInlineQuery: WhatIfIToldYouParsedInlineQuery): InlineQueryResult? {
@@ -86,10 +85,10 @@ class WhatIfIToldYou(
                     fontStyle = FontStyle(FontWeight.BLACK, FontWidth.CONDENSED, FontSlant.UPRIGHT)
                     setFontFamily("Oswald")
                     addShadows(arrayOf(
-                            Shadow(0xFF000000.toInt(), 1F, 0F, 2.toDouble()),
-                            Shadow(0xFF000000.toInt(), 0F, 1F, 2.toDouble()),
-                            Shadow(0xFF000000.toInt(), -1F, 0F, 2.toDouble()),
-                            Shadow(0xFF000000.toInt(), 0F, -1F, 2.toDouble()),
+                        Shadow(0xFF000000.toInt(), 1F, 0F, 2.toDouble()),
+                        Shadow(0xFF000000.toInt(), 0F, 1F, 2.toDouble()),
+                        Shadow(0xFF000000.toInt(), -1F, 0F, 2.toDouble()),
+                        Shadow(0xFF000000.toInt(), 0F, -1F, 2.toDouble()),
                     ))
                 }
 
@@ -112,10 +111,10 @@ class WhatIfIToldYou(
                     fontStyle = FontStyle(FontWeight.BLACK, FontWidth.CONDENSED, FontSlant.UPRIGHT)
                     setFontFamily("Oswald")
                     addShadows(arrayOf(
-                            Shadow(0xFF000000.toInt(), 1F, 0F, 2.toDouble()),
-                            Shadow(0xFF000000.toInt(), 0F, 1F, 2.toDouble()),
-                            Shadow(0xFF000000.toInt(), -1F, 0F, 2.toDouble()),
-                            Shadow(0xFF000000.toInt(), 0F, -1F, 2.toDouble()),
+                        Shadow(0xFF000000.toInt(), 1F, 0F, 2.toDouble()),
+                        Shadow(0xFF000000.toInt(), 0F, 1F, 2.toDouble()),
+                        Shadow(0xFF000000.toInt(), -1F, 0F, 2.toDouble()),
+                        Shadow(0xFF000000.toInt(), 0F, -1F, 2.toDouble()),
                     ))
                 }
 
@@ -133,19 +132,19 @@ class WhatIfIToldYou(
         val data = snapshot.encodeToData(EncodedImageFormat.JPEG, 95) ?: return null
 
         val upload = imgur.imageUpload(ImageUploadRequest(
-                image = data.bytes,
-                name = "what if i told you.jpeg"
+            image = data.bytes,
+            name = "what if i told you.jpeg"
         ))
         val responseData = upload.data
 
         logger.debug("Imgur upload result: {}", responseData)
 
         return InlineQueryResultPhotoImpl(
-                id = UUID.randomUUID().toString(),
-                url = responseData.link,
-                thumbUrl = responseData.link,
-                width = responseData.width,
-                height = responseData.height,
+            id = UUID.randomUUID().toString(),
+            url = responseData.link,
+            thumbUrl = responseData.link,
+            width = responseData.width,
+            height = responseData.height,
         )
     }
 }
@@ -156,5 +155,5 @@ class WhatIfIToldYou(
  * @property whatIfYouToldMeWhat so what is Morpheus trying to told us?
  */
 data class WhatIfIToldYouParsedInlineQuery(
-        val whatIfYouToldMeWhat: String
+    val whatIfYouToldMeWhat: String
 ) : ParsedInlineQuery

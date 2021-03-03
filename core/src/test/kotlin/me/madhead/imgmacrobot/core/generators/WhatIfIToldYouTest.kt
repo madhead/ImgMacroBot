@@ -33,35 +33,35 @@ internal class WhatIfIToldYouTest {
     @Suppress("unused")
     private fun parseInlineQueryParams(): List<Arguments> {
         val user = CommonUser(
-                id = ChatId(0),
-                firstName = "user"
+            id = ChatId(0),
+            firstName = "user"
         )
 
         return listOf(
-                Arguments.of(
-                        BaseInlineQuery(id = "", from = user, query = "What if I told you that Morpheus never said that", offset = ""),
-                        WhatIfIToldYouParsedInlineQuery("that Morpheus never said that")
-                ),
-                Arguments.of(
-                        BaseInlineQuery(id = "", from = user, query = "wHaT   iF i   ToLd yOu that Morpheus never said that", offset = ""),
-                        WhatIfIToldYouParsedInlineQuery("that Morpheus never said that")
-                ),
-                Arguments.of(
-                        BaseInlineQuery(id = "", from = user, query = "What if I told you", offset = ""),
-                        null
-                ),
-                Arguments.of(
-                        BaseInlineQuery(id = "", from = user, query = "What if I told you       ", offset = ""),
-                        null
-                ),
-                Arguments.of(
-                        BaseInlineQuery(id = "", from = user, query = "What if I told you…", offset = ""),
-                        null
-                ),
-                Arguments.of(
-                        BaseInlineQuery(id = "", from = user, query = "What if you told me your secret?", offset = ""),
-                        null
-                ),
+            Arguments.of(
+                BaseInlineQuery(id = "", from = user, query = "What if I told you that Morpheus never said that", offset = ""),
+                WhatIfIToldYouParsedInlineQuery("that Morpheus never said that")
+            ),
+            Arguments.of(
+                BaseInlineQuery(id = "", from = user, query = "wHaT   iF i   ToLd yOu that Morpheus never said that", offset = ""),
+                WhatIfIToldYouParsedInlineQuery("that Morpheus never said that")
+            ),
+            Arguments.of(
+                BaseInlineQuery(id = "", from = user, query = "What if I told you", offset = ""),
+                null
+            ),
+            Arguments.of(
+                BaseInlineQuery(id = "", from = user, query = "What if I told you       ", offset = ""),
+                null
+            ),
+            Arguments.of(
+                BaseInlineQuery(id = "", from = user, query = "What if I told you…", offset = ""),
+                null
+            ),
+            Arguments.of(
+                BaseInlineQuery(id = "", from = user, query = "What if you told me your secret?", offset = ""),
+                null
+            ),
         )
     }
 }

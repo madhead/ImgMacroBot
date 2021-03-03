@@ -30,10 +30,10 @@ val metricsModule = module {
 
     single(named(IMGUR_RATE_LIMITS)) {
         MultiGauge
-                .builder("imgur")
-                .description("Imgur API rate limits")
-                .baseUnit("credits")
-                .register(get<PrometheusMeterRegistry>())
+            .builder("imgur")
+            .description("Imgur API rate limits")
+            .baseUnit("credits")
+            .register(get<PrometheusMeterRegistry>())
     }
 }
 

@@ -37,24 +37,24 @@ fun Application.main() {
     install(Compression)
     install(Koin) {
         modules(
-                configModule(environment.config),
-                metricsModule,
-                imgurModule,
-                jsonModule,
-                telegramModule,
-                pipelineModule,
+            configModule(environment.config),
+            metricsModule,
+            imgurModule,
+            jsonModule,
+            telegramModule,
+            pipelineModule,
         )
     }
     install(MicrometerMetrics) {
         registry = get<PrometheusMeterRegistry>()
         meterBinders = listOf(
-                ClassLoaderMetrics(),
-                JvmMemoryMetrics(),
-                JvmGcMetrics(),
-                ProcessorMetrics(),
-                JvmThreadMetrics(),
-                FileDescriptorMetrics(),
-                UptimeMetrics(),
+            ClassLoaderMetrics(),
+            JvmMemoryMetrics(),
+            JvmGcMetrics(),
+            ProcessorMetrics(),
+            JvmThreadMetrics(),
+            FileDescriptorMetrics(),
+            UptimeMetrics(),
         )
     }
 

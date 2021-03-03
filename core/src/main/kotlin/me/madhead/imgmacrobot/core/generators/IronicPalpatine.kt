@@ -19,8 +19,8 @@ import kotlin.io.path.readBytes
  */
 @ExperimentalPathApi
 class IronicPalpatine(
-        private val templatesDir: Path,
-        private val imgur: Imgur,
+    private val templatesDir: Path,
+    private val imgur: Imgur,
 ) : ParsingImageMacroGenerator<EmptyParsedInlineQuery> {
     companion object {
         private val logger = LogManager.getLogger(IronicPalpatine::class.java)!!
@@ -30,7 +30,7 @@ class IronicPalpatine(
         return if (inlineQuery.query.contains("ironic", ignoreCase = true) || ("ironic".contains(inlineQuery.query, ignoreCase = true))) {
             EmptyParsedInlineQuery
         } else {
-            null;
+            null
         }
     }
 
@@ -39,19 +39,19 @@ class IronicPalpatine(
 
         return templatesDir.resolve("ironic.jpeg").takeIf { it.isRegularFile() }?.let { file ->
             val upload = imgur.imageUpload(ImageUploadRequest(
-                    image = file.readBytes(),
-                    name = "ironic.jpeg"
+                image = file.readBytes(),
+                name = "ironic.jpeg"
             ))
             val data = upload.data
 
             logger.debug("Imgur upload result: {}", data)
 
             InlineQueryResultPhotoImpl(
-                    id = UUID.randomUUID().toString(),
-                    url = data.link,
-                    thumbUrl = data.link,
-                    width = data.width,
-                    height = data.height,
+                id = UUID.randomUUID().toString(),
+                url = data.link,
+                thumbUrl = data.link,
+                width = data.width,
+                height = data.height,
             )
         }
     }

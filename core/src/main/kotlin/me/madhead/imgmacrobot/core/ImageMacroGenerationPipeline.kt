@@ -19,9 +19,9 @@ import org.apache.logging.log4j.LogManager
  * @property timeout maximum time given to a single generator to provide any results in milliseconds.
  */
 class ImageMacroGenerationPipeline(
-        private val generators: List<ImageMacroGenerator>,
-        private val requestsExecutor: RequestsExecutor,
-        private val timeout: Long = 5_000
+    private val generators: List<ImageMacroGenerator>,
+    private val requestsExecutor: RequestsExecutor,
+    private val timeout: Long = 5_000
 ) {
     companion object {
         private val logger = LogManager.getLogger(ImageMacroGenerationPipeline::class.java)!!
@@ -43,28 +43,28 @@ class ImageMacroGenerationPipeline(
 
         val results = coroutineScope {
             generators
-                    .map { generator ->
-                        async {
-                            try {
-                                withTimeout(timeout) {
-                                    generator.generate(update.data)
-                                }
-                            } catch (ignored: Throwable) {
-                                logger.error("{} failed!", generator::class.simpleName, ignored)
-
-                                null
+                .map { generator ->
+                    async {
+                        try {
+                            withTimeout(timeout) {
+                                generator.generate(update.data)
                             }
+                        } catch (ignored: Throwable) {
+                            logger.error("{} failed!", generator::class.simpleName, ignored)
+
+                            null
                         }
                     }
-                    .awaitAll()
-                    .filterNotNull()
+                }
+                .awaitAll()
+                .filterNotNull()
         }
 
         logger.info("Inline query results: {}", results)
 
         requestsExecutor.answerInlineQuery(
-                inlineQuery = update.data,
-                results = results
+            inlineQuery = update.data,
+            results = results
         )
     }
 }

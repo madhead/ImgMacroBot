@@ -9,8 +9,8 @@ package me.madhead.imgmacrobot.imgur
  * @property description the description of the image.
  */
 data class ImageUploadRequest(
-        val image: ByteArray,
-        val name: String? = null,
-        val title: String? = null,
-        val description: String? = null,
+    val image: ByteArray,
+    val name: String? = null,
+    val title: String? = null,
+    val description: String? = null,
 )

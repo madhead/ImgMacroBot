@@ -12,12 +12,12 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class ImageUploadResponse(
-        @SerialName("status")
-        val status: Int,
+    @SerialName("status")
+    val status: Int,
 
-        @SerialName("success")
-        val success: Boolean,
+    @SerialName("success")
+    val success: Boolean,
 
-        @SerialName("data")
-        val data: ImageUploadResponseData,
+    @SerialName("data")
+    val data: ImageUploadResponseData,
 )

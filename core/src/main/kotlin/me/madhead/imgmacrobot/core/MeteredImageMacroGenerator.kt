@@ -9,14 +9,14 @@ import io.micrometer.core.instrument.Timer
  * A [ParsingImageMacroGenerator] implementation who tracks the timings of its delegates.
  */
 class MeteredImageMacroGenerator<T : ParsedInlineQuery>(
-        private val delegate: ParsingImageMacroGenerator<T>,
-        private val registry: MeterRegistry,
+    private val delegate: ParsingImageMacroGenerator<T>,
+    private val registry: MeterRegistry,
 ) : ParsingImageMacroGenerator<T> {
     private val timer = Timer
-            .builder("imgmacrobot.generators")
-            .description("Image macro generation stats")
-            .tag("name", delegate::class.simpleName ?: "unknown")
-            .register(registry)
+        .builder("imgmacrobot.generators")
+        .description("Image macro generation stats")
+        .tag("name", delegate::class.simpleName ?: "unknown")
+        .register(registry)
 
     override fun parseInlineQuery(inlineQuery: InlineQuery): T? = delegate.parseInlineQuery(inlineQuery)
 

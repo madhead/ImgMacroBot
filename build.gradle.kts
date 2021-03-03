@@ -17,6 +17,12 @@ allprojects {
         maven("https://packages.jetbrains.team/maven/p/skija/maven")
     }
 
+    dependencies {
+        val detektPlugins by configurations
+
+        detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:${Versions.Plugins.DETEKT}")
+    }
+
     configure<DetektExtension> {
         parallel = true
         config = files("$rootDir/detekt.yml")

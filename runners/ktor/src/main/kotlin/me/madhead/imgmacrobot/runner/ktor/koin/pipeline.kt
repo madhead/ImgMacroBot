@@ -18,24 +18,24 @@ import kotlin.io.path.Path
 val pipelineModule = module {
     single {
         ImageMacroGenerationPipeline(
-                listOf(
-                        MeteredImageMacroGenerator(
-                                IronicPalpatine(
-                                        Path(get<ApplicationConfig>().property("templates_dir").getString()),
-                                        get(),
-                                ),
-                                get<PrometheusMeterRegistry>()
-                        ),
-                        MeteredImageMacroGenerator(
-                                WhatIfIToldYou(
-                                        Path(get<ApplicationConfig>().property("templates_dir").getString()),
-                                        Path(get<ApplicationConfig>().property("fonts_dir").getString()),
-                                        get(),
-                                ),
-                                get<PrometheusMeterRegistry>()
-                        )
+            listOf(
+                MeteredImageMacroGenerator(
+                    IronicPalpatine(
+                        Path(get<ApplicationConfig>().property("templates_dir").getString()),
+                        get(),
+                    ),
+                    get<PrometheusMeterRegistry>()
                 ),
-                get(),
+                MeteredImageMacroGenerator(
+                    WhatIfIToldYou(
+                        Path(get<ApplicationConfig>().property("templates_dir").getString()),
+                        Path(get<ApplicationConfig>().property("fonts_dir").getString()),
+                        get(),
+                    ),
+                    get<PrometheusMeterRegistry>()
+                )
+            ),
+            get(),
         )
     }
 }
