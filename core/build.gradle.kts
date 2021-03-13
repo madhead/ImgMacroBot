@@ -1,5 +1,8 @@
+import java.lang.System.getenv as env
+
 plugins {
     kotlin("jvm")
+    id("org.liquibase.gradle")
 }
 
 dependencies {
@@ -18,4 +21,23 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-params")
     testImplementation("io.mockk:mockk:${Versions.Dependencies.MOCKK}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+
+    liquibaseRuntime("org.liquibase:liquibase-core:${Versions.Dependencies.LIQUIBASE}")
+    liquibaseRuntime("org.yaml:snakeyaml:${Versions.Dependencies.SNAKEYAML}")
+    liquibaseRuntime("com.oracle.database.jdbc:ojdbc11-production:${Versions.Dependencies.OJDBC11}")
+}
+
+liquibase {
+    activities {
+        register("imgmacrobot") {
+            this.arguments = mapOf(
+                "url" to "jdbc:oracle:thin:@${env("DB_TNSNAME")}?TNS_ADMIN=${project.file("src/main/wallet").absolutePath}",
+                "username" to env("DB_USER"),
+                "password" to env("DB_PASSWORD"),
+                "driver" to "oracle.jdbc.OracleDriver",
+                "changeLogFile" to "src/main/liquibase/changelog.yml",
+                "classpath" to "$projectDir"
+            )
+        }
+    }
 }

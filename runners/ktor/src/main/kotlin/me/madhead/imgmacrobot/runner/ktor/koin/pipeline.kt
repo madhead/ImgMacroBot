@@ -22,7 +22,7 @@ import kotlin.io.path.readBytes
 @ExperimentalPathApi
 val pipelineModule = module {
     single {
-        val fontsDir = Path(get<ApplicationConfig>().property("fonts_dir").getString())
+        val fontsDir = Path(get<ApplicationConfig>().property("fontsDir").getString())
         val fontPath = fontsDir.resolve("Oswald.ttf")
         val fontData = Data.makeFromBytes(fontPath.readBytes())!!
         val font = Typeface.makeFromData(fontData)
@@ -40,12 +40,12 @@ val pipelineModule = module {
         ImageMacroGenerationPipeline(
             listOf(
                 IronicPalpatine(
-                    Path(get<ApplicationConfig>().property("templates_dir").getString()),
+                    Path(get<ApplicationConfig>().property("templatesDir").getString()),
                     get(),
                     get<PrometheusMeterRegistry>()
                 ),
                 WhatIfIToldYou(
-                    Path(get<ApplicationConfig>().property("templates_dir").getString()),
+                    Path(get<ApplicationConfig>().property("templatesDir").getString()),
                     get(),
                     get(),
                     get<PrometheusMeterRegistry>()

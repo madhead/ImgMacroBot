@@ -20,6 +20,7 @@ dependencies {
     implementation("org.apache.logging.log4j:log4j-core")
     implementation("org.apache.logging.log4j:log4j-slf4j-impl")
     implementation("com.fasterxml.jackson.core:jackson-databind")
+    implementation("com.oracle.database.jdbc:ojdbc11-production:${Versions.Dependencies.OJDBC11}")
 }
 
 application {

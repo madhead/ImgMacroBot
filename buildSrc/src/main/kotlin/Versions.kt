@@ -13,6 +13,7 @@ object Versions {
     object Plugins {
         const val KOTLIN = "1.4.21"
         const val DETEKT = "1.15.0"
+        const val LIQUIBASE = "2.0.4"
     }
 
     /**
@@ -29,5 +30,8 @@ object Versions {
         const val JACKSON = "2.12.1"
         const val JUNIT = "5.7.1"
         const val MOCKK = "1.10.6"
+        const val LIQUIBASE = "4.3.1"
+        const val SNAKEYAML = "1.28"
+        const val OJDBC11 = "21.1.0.0"
     }
 }
