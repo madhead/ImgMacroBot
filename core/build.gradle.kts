@@ -11,7 +11,7 @@ dependencies {
     api(project(":imgur"))
     api("io.micrometer:micrometer-core")
     api("dev.inmo:tgbotapi:${Versions.Dependencies.TGBOTAPI}")
-    implementation("org.jetbrains.skija:skija-linux:${Versions.Dependencies.SKIJA}")
+    api("org.jetbrains.skija:skija-linux:${Versions.Dependencies.SKIJA}")
     implementation("org.apache.logging.log4j:log4j-core")
 
     testImplementation("org.junit.jupiter:junit-jupiter-api")

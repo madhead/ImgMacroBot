@@ -9,23 +9,19 @@ import me.madhead.imgmacrobot.core.ParsedInlineQuery
 import me.madhead.imgmacrobot.imgur.ImageUploadRequest
 import me.madhead.imgmacrobot.imgur.Imgur
 import org.apache.logging.log4j.LogManager
-import org.jetbrains.skija.Data
 import org.jetbrains.skija.EncodedImageFormat
-import org.jetbrains.skija.FontMgr
 import org.jetbrains.skija.FontSlant
 import org.jetbrains.skija.FontStyle
 import org.jetbrains.skija.FontWeight
 import org.jetbrains.skija.FontWidth
 import org.jetbrains.skija.Image
 import org.jetbrains.skija.Surface
-import org.jetbrains.skija.Typeface
 import org.jetbrains.skija.paragraph.Alignment
 import org.jetbrains.skija.paragraph.FontCollection
 import org.jetbrains.skija.paragraph.ParagraphBuilder
 import org.jetbrains.skija.paragraph.ParagraphStyle
 import org.jetbrains.skija.paragraph.Shadow
 import org.jetbrains.skija.paragraph.TextStyle
-import org.jetbrains.skija.paragraph.TypefaceFontProvider
 import java.nio.file.Path
 import java.util.UUID
 import kotlin.io.path.ExperimentalPathApi
@@ -39,9 +35,9 @@ import kotlin.io.path.readBytes
 @Suppress("LongMethod", "MagicNumber", "ForbiddenComment", "ComplexMethod", "ReturnCount")
 class WhatIfIToldYou(
     private val templatesDir: Path,
-    private val fontsDir: Path,
     private val imgur: Imgur,
-    registry: MeterRegistry? = null,
+    private val fontCollection: FontCollection,
+    registry: MeterRegistry,
 ) : CachingImageMacroGenerator<WhatIfIToldYouParsedInlineQuery>(registry) {
     companion object {
         private val logger = LogManager.getLogger(WhatIfIToldYou::class.java)!!
@@ -68,19 +64,8 @@ class WhatIfIToldYou(
     override suspend fun generate(parsedInlineQuery: WhatIfIToldYouParsedInlineQuery): InlineQueryResult? {
         logger.info("Generating image macro")
 
-        // TODO: Caching fonts
         val templatePath = templatesDir.resolve("WhatIfIToldYou.png").takeIf { it.isRegularFile() } ?: return null
-        val fontPath = fontsDir.resolve("Oswald.ttf").takeIf { it.isRegularFile() } ?: return null
         val template = Image.makeFromEncoded(templatePath.readBytes()) ?: return null
-        val fontData = Data.makeFromBytes(fontPath.readBytes()) ?: return null
-        val font = Typeface.makeFromData(fontData)
-        val fontProvider = TypefaceFontProvider()
-        val fontCollection = FontCollection()
-
-        fontProvider.registerTypeface(font)
-        fontCollection.setDefaultFontManager(FontMgr.getDefault())
-        fontCollection.setAssetFontManager(fontProvider)
-
         val surface = Surface.makeRasterN32Premul(template.width, template.height)
         val canvas = surface.canvas
 
