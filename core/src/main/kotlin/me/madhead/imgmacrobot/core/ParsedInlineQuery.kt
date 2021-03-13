@@ -7,9 +7,3 @@ import dev.inmo.tgbotapi.types.InlineQueries.abstracts.InlineQuery
  * be completely empty for those [generators][ImageMacroGenerator] who don't have any placeholders.
  */
 interface ParsedInlineQuery
-
-/**
- * Default [ParsedInlineQuery] implementation used in cases where no values are extracted from the query
- * (e.g. for generating static macros with no placeholders).
- */
-object EmptyParsedInlineQuery : ParsedInlineQuery
