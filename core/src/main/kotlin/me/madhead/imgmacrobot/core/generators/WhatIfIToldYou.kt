@@ -1,11 +1,13 @@
 package me.madhead.imgmacrobot.core.generators
 
 import dev.inmo.tgbotapi.types.InlineQueries.InlineQueryResult.InlineQueryResultPhotoImpl
-import dev.inmo.tgbotapi.types.InlineQueries.InlineQueryResult.abstracts.InlineQueryResult
 import dev.inmo.tgbotapi.types.InlineQueries.abstracts.InlineQuery
 import io.micrometer.core.instrument.MeterRegistry
+import me.madhead.imgmacrobot.core.CacheableInlineQueryResult
 import me.madhead.imgmacrobot.core.CachingImageMacroGenerator
 import me.madhead.imgmacrobot.core.ParsedInlineQuery
+import me.madhead.imgmacrobot.core.dao.CachedInlineQueryResultDAO
+import me.madhead.imgmacrobot.core.entity.CachedInlineQueryResultType
 import me.madhead.imgmacrobot.imgur.ImageUploadRequest
 import me.madhead.imgmacrobot.imgur.Imgur
 import org.apache.logging.log4j.LogManager
@@ -37,8 +39,9 @@ class WhatIfIToldYou(
     private val templatesDir: Path,
     private val imgur: Imgur,
     private val fontCollection: FontCollection,
+    cachedInlineQueryResultDAO: CachedInlineQueryResultDAO,
     registry: MeterRegistry,
-) : CachingImageMacroGenerator<WhatIfIToldYouParsedInlineQuery>(registry) {
+) : CachingImageMacroGenerator<WhatIfIToldYouParsedInlineQuery>(cachedInlineQueryResultDAO, registry) {
     companion object {
         private val logger = LogManager.getLogger(WhatIfIToldYou::class.java)!!
         private val regex = "What +if +I +told +you ++(.+)".toRegex(RegexOption.IGNORE_CASE)
@@ -53,15 +56,7 @@ class WhatIfIToldYou(
             }
     }
 
-    override fun cached(parsedInlineQuery: ParsedInlineQuery): InlineQueryResult? {
-        return null
-    }
-
-    override fun cache(parsedInlineQuery: ParsedInlineQuery, result: InlineQueryResult) {
-        Unit
-    }
-
-    override suspend fun generate(parsedInlineQuery: WhatIfIToldYouParsedInlineQuery): InlineQueryResult? {
+    override suspend fun generateCacheable(parsedInlineQuery: WhatIfIToldYouParsedInlineQuery): CacheableInlineQueryResult? {
         logger.info("Generating image macro")
 
         val templatePath = templatesDir.resolve("WhatIfIToldYou.png").takeIf { it.isRegularFile() } ?: return null
@@ -134,12 +129,20 @@ class WhatIfIToldYou(
 
         logger.debug("Imgur upload result: {}", responseData)
 
-        return InlineQueryResultPhotoImpl(
-            id = UUID.randomUUID().toString(),
+        return CacheableInlineQueryResult(
+            inlineQueryResult = InlineQueryResultPhotoImpl(
+                id = UUID.randomUUID().toString(),
+                url = responseData.link,
+                thumbUrl = responseData.link,
+                width = responseData.width,
+                height = responseData.height,
+            ),
+            type = CachedInlineQueryResultType.PHOTO,
             url = responseData.link,
-            thumbUrl = responseData.link,
             width = responseData.width,
             height = responseData.height,
+            id = responseData.id,
+            deleteHash = responseData.deleteHash,
         )
     }
 }
@@ -151,4 +154,7 @@ class WhatIfIToldYou(
  */
 data class WhatIfIToldYouParsedInlineQuery(
     val whatIfYouToldMeWhat: String
-) : ParsedInlineQuery
+) : ParsedInlineQuery {
+    override val discriminator: String
+        get() = whatIfYouToldMeWhat
+}

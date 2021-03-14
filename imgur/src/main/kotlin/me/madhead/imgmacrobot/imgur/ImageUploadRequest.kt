@@ -3,7 +3,7 @@ package me.madhead.imgmacrobot.imgur
 /**
  * Imgur image upload request.
  *
- * @property image an image to upload.
+ * @property image the image to upload.
  * @property name the name of the file.
  * @property title the title of the image.
  * @property description the description of the image.

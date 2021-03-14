@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
  * Imgur's image upload response.
  *
  * @property status status.
- * @property success operation result..
+ * @property success operation result.
  * @property data response details.
  */
 @Serializable

@@ -1,8 +1,8 @@
 package me.madhead.imgmacrobot.runner.ktor.koin
 
 import io.ktor.config.ApplicationConfig
-import me.madhead.imgmacrobot.core.dao.CacheDAO
-import me.madhead.imgmacrobot.core.dao.OracleCacheDAO
+import me.madhead.imgmacrobot.core.dao.CachedInlineQueryResultDAO
+import me.madhead.imgmacrobot.core.dao.OracleCachedInlineQueryResultDAO
 import me.madhead.imgmacrobot.core.dao.OracleTimestampDAO
 import me.madhead.imgmacrobot.core.dao.TimestampDAO
 import oracle.ucp.jdbc.PoolDataSourceFactory
@@ -33,7 +33,7 @@ val dbModule = module {
         OracleTimestampDAO(get())
     }
 
-    single<CacheDAO> {
-        OracleCacheDAO(get())
+    single<CachedInlineQueryResultDAO> {
+        OracleCachedInlineQueryResultDAO(get())
     }
 }

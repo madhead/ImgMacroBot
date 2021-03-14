@@ -42,10 +42,12 @@ val pipelineModule = module {
                 IronicPalpatine(
                     Path(get<ApplicationConfig>().property("templatesDir").getString()),
                     get(),
+                    get(),
                     get<PrometheusMeterRegistry>()
                 ),
                 WhatIfIToldYou(
                     Path(get<ApplicationConfig>().property("templatesDir").getString()),
+                    get(),
                     get(),
                     get(),
                     get<PrometheusMeterRegistry>()
