@@ -16,6 +16,12 @@ https://knowyourmeme.com/memes/emperor-palpatine-ironic[**Ironic Palpatine**]::
 Triggered by a phrase containing "ironic" substring.
 +
 image::./demos/ironic palpatine.jpeg[]
+
+https://knowyourmeme.com/memes/emperor-palpatine-ironic[**Ironic Palpatine (ru)**]::
+Triggered by a phrase containing "иронично" substring.
++
+image::./demos/ironic palpatine ru.jpeg[]
+
 https://knowyourmeme.com/memes/matrix-morpheus[**Matrix Morpheus**]::
 Triggered by a pattern "What if I told you <something>".
 +
