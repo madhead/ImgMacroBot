@@ -52,6 +52,16 @@ Triggered by a pattern "Я и сам своего рода <кто-то>" or by 
 +
 image::./demos/i'm something of a scientist myself ru.jpeg[]
 
+https://knowyourmeme.com/memes/one-does-not-simply-walk-into-mordor[**One does not simply walk into Mordor**]::
+Triggered by a pattern "One does not simply <do something>" or by macro id: "Boromir: <do something>"
++
+image::./demos/one does not simply walk into mordor.jpeg[]
+
+https://knowyourmeme.com/memes/one-does-not-simply-walk-into-mordor[**One does not simply walk into Mordor (ru)**]::
+Triggered by a pattern "Нельзя просто так взять и <сделать что-то>" or by macro id: "Боромир: <сделать что-то>"
++
+image::./demos/one does not simply walk into mordor ru.jpeg[]
+
 == Running locally
 
 . Define the required environment variables in `.env` file in the root of the project.

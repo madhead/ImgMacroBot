@@ -10,7 +10,7 @@ import java.nio.file.Path
 import kotlin.io.path.ExperimentalPathApi
 
 /**
- * Palpatine's reaction to the hate flowing through Luke Skywalker.
+ * Palpatine's reaction to the hate flowing through Luke Skywalker (russian).
  */
 @ExperimentalPathApi
 class GoodGoodPalpatineRu(
