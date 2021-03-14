@@ -22,6 +22,16 @@ Triggered by a phrase containing "иронично" substring.
 +
 image::./demos/ironic palpatine ru.jpeg[]
 
+https://knowyourmeme.com/memes/let-the-hate-flow-through-you[**Good Palpatine**]::
+Triggered by a phrase containing "good" substring (more "o"s allowed).
++
+image::./demos/good good.jpeg[]
+
+https://knowyourmeme.com/memes/let-the-hate-flow-through-you[**Good Palpatine (ru)**]::
+Triggered by a phrase containing "хорошо" substring (more "о"s allowed).
++
+image::./demos/good good ru.jpeg[]
+
 https://knowyourmeme.com/memes/matrix-morpheus[**Matrix Morpheus**]::
 Triggered by a pattern "What if I told you <something>".
 +

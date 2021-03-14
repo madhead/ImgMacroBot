@@ -3,6 +3,8 @@ package me.madhead.imgmacrobot.runner.ktor.koin
 import io.ktor.config.ApplicationConfig
 import io.micrometer.prometheus.PrometheusMeterRegistry
 import me.madhead.imgmacrobot.core.ImageMacroGenerationPipeline
+import me.madhead.imgmacrobot.core.generators.GoodGoodPalpatine
+import me.madhead.imgmacrobot.core.generators.GoodGoodPalpatineRu
 import me.madhead.imgmacrobot.core.generators.IronicPalpatine
 import me.madhead.imgmacrobot.core.generators.IronicPalpatineRu
 import me.madhead.imgmacrobot.core.generators.WhatIfIToldYou
@@ -47,6 +49,18 @@ val pipelineModule = module {
                     get<PrometheusMeterRegistry>()
                 ),
                 IronicPalpatineRu(
+                    Path(get<ApplicationConfig>().property("templatesDir").getString()),
+                    get(),
+                    get(),
+                    get<PrometheusMeterRegistry>()
+                ),
+                GoodGoodPalpatine(
+                    Path(get<ApplicationConfig>().property("templatesDir").getString()),
+                    get(),
+                    get(),
+                    get<PrometheusMeterRegistry>()
+                ),
+                GoodGoodPalpatineRu(
                     Path(get<ApplicationConfig>().property("templatesDir").getString()),
                     get(),
                     get(),

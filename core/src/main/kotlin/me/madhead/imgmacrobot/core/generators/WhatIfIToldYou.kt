@@ -59,7 +59,7 @@ class WhatIfIToldYou(
     override suspend fun generateCacheable(parsedInlineQuery: WhatIfIToldYouParsedInlineQuery): CacheableInlineQueryResult? {
         logger.info("Generating image macro")
 
-        val templatePath = templatesDir.resolve("WhatIfIToldYou.png").takeIf { it.isRegularFile() } ?: return null
+        val templatePath = templatesDir.resolve("what if i told you.png").takeIf { it.isRegularFile() } ?: return null
         val template = Image.makeFromEncoded(templatePath.readBytes()) ?: return null
         val surface = Surface.makeRasterN32Premul(template.width, template.height)
         val canvas = surface.canvas
