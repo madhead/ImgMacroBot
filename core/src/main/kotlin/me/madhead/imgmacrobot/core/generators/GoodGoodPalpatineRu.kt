@@ -10,24 +10,27 @@ import java.nio.file.Path
 import kotlin.io.path.ExperimentalPathApi
 
 /**
- * Palpatine's reaction to the tragedy of Darth Plagueis the Wise (russian).
+ * Palpatine's reaction to the hate flowing through Luke Skywalker.
  */
 @ExperimentalPathApi
-class IronicPalpatineRu(
+class GoodGoodPalpatineRu(
     templatesDir: Path,
     imgur: Imgur,
     cachedInlineQueryResultDAO: CachedInlineQueryResultDAO,
     registry: MeterRegistry,
-) : StaticImageMacroGenerator<IronicPalpatineRuParsedInlineQuery>(templatesDir,
-    "ironic ru.jpeg",
+) : StaticImageMacroGenerator<GoodGoodPalpatineRuParsedInlineQuery>(templatesDir,
+    "good good ru.jpeg",
     imgur,
     cachedInlineQueryResultDAO,
     registry
 ) {
-    override fun parseInlineQuery(inlineQuery: InlineQuery): IronicPalpatineRuParsedInlineQuery? {
-        return if (inlineQuery.query.isNotBlank() &&
-            ((inlineQuery.query.contains("иронично", ignoreCase = true)) || ("иронично".contains(inlineQuery.query, ignoreCase = true)))) {
-            IronicPalpatineRuParsedInlineQuery
+    companion object {
+        private val regex = "хо+ро+шо+".toRegex(RegexOption.IGNORE_CASE)
+    }
+
+    override fun parseInlineQuery(inlineQuery: InlineQuery): GoodGoodPalpatineRuParsedInlineQuery? {
+        return if (regex.containsMatchIn(inlineQuery.query)) {
+            GoodGoodPalpatineRuParsedInlineQuery
         } else {
             null
         }
@@ -35,9 +38,9 @@ class IronicPalpatineRu(
 }
 
 /**
- * [ParsedInlineQuery] implementation for [IronicPalpatineRu].
+ * [ParsedInlineQuery] implementation for [GoodGoodPalpatineRu].
  */
-object IronicPalpatineRuParsedInlineQuery : ParsedInlineQuery {
+object GoodGoodPalpatineRuParsedInlineQuery : ParsedInlineQuery {
     override val discriminator: String
         get() = "_"
 }
