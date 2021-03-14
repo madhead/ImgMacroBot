@@ -37,12 +37,17 @@ Triggered by a pattern "What if I told you <what>" or by macro id: "morpheus: <w
 +
 image::./demos/matrix morpheus.jpeg[]
 
+https://knowyourmeme.com/memes/matrix-morpheus[**Matrix Morpheus (ru)**]::
+Triggered by a pattern "Что если я скажу тебе <что-то>" or by macro id: "Морфеус: <что-то>"
++
+image::./demos/matrix morpheus ru.jpeg[]
+
 https://knowyourmeme.com/memes/im-something-of-a-scientist-myself[**I'm something of a scientist myself**]::
 Triggered by a pattern "I'm something of a <who> myself" or by macro id: "scientist: <who>"
 +
 image::./demos/i'm something of a scientist myself.jpeg[]
 
-https://knowyourmeme.com/memes/im-something-of-a-scientist-myself[**I'm something of a scientist myself (ru(**]::
+https://knowyourmeme.com/memes/im-something-of-a-scientist-myself[**I'm something of a scientist myself (ru)**]::
 Triggered by a pattern "Я и сам своего рода <кто-то>" or by macro id: "учёный: <кто-то>"
 +
 image::./demos/i'm something of a scientist myself ru.jpeg[]
