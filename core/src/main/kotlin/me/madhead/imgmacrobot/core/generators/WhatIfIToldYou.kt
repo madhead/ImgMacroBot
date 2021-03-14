@@ -31,7 +31,7 @@ class WhatIfIToldYou(
     registry,
 ) {
     companion object {
-        private val macroIdRegex = "Morpheus:(\\s*)(?<what>.+)".toRegex(RegexOption.IGNORE_CASE)
+        private val macroIdRegex = "morpheus:(\\s*)(?<what>.+)".toRegex(RegexOption.IGNORE_CASE)
         private val regex = "What +if +I +told +you ++(?<what>.+)".toRegex(RegexOption.IGNORE_CASE)
     }
 
