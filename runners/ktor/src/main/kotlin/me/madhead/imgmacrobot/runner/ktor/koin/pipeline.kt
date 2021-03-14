@@ -7,6 +7,8 @@ import me.madhead.imgmacrobot.core.generators.GoodGoodPalpatine
 import me.madhead.imgmacrobot.core.generators.GoodGoodPalpatineRu
 import me.madhead.imgmacrobot.core.generators.IronicPalpatine
 import me.madhead.imgmacrobot.core.generators.IronicPalpatineRu
+import me.madhead.imgmacrobot.core.generators.SomethingOfAScientist
+import me.madhead.imgmacrobot.core.generators.SomethingOfAScientistRu
 import me.madhead.imgmacrobot.core.generators.WhatIfIToldYou
 import org.jetbrains.skija.Data
 import org.jetbrains.skija.FontMgr
@@ -67,6 +69,20 @@ val pipelineModule = module {
                     get<PrometheusMeterRegistry>()
                 ),
                 WhatIfIToldYou(
+                    Path(get<ApplicationConfig>().property("templatesDir").getString()),
+                    get(),
+                    get(),
+                    get(),
+                    get<PrometheusMeterRegistry>()
+                ),
+                SomethingOfAScientist(
+                    Path(get<ApplicationConfig>().property("templatesDir").getString()),
+                    get(),
+                    get(),
+                    get(),
+                    get<PrometheusMeterRegistry>()
+                ),
+                SomethingOfAScientistRu(
                     Path(get<ApplicationConfig>().property("templatesDir").getString()),
                     get(),
                     get(),

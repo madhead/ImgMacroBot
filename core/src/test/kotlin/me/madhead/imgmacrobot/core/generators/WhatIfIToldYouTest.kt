@@ -44,6 +44,14 @@ internal class WhatIfIToldYouTest {
 
         return listOf(
             Arguments.of(
+                BaseInlineQuery(id = "", from = user, query = "morpheus: that Morpheus never said that", offset = ""),
+                WhatIfIToldYouParsedInlineQuery("that Morpheus never said that")
+            ),
+            Arguments.of(
+                BaseInlineQuery(id = "", from = user, query = "morpheus:\tthat Morpheus never said that", offset = ""),
+                WhatIfIToldYouParsedInlineQuery("that Morpheus never said that")
+            ),
+            Arguments.of(
                 BaseInlineQuery(id = "", from = user, query = "What if I told you that Morpheus never said that", offset = ""),
                 WhatIfIToldYouParsedInlineQuery("that Morpheus never said that")
             ),

@@ -33,9 +33,19 @@ Triggered by a phrase containing "хорошо" substring (more "о"s allowed).
 image::./demos/good good ru.jpeg[]
 
 https://knowyourmeme.com/memes/matrix-morpheus[**Matrix Morpheus**]::
-Triggered by a pattern "What if I told you <something>".
+Triggered by a pattern "What if I told you <what>" or by macro id: "morpheus: <what>"
 +
 image::./demos/matrix morpheus.jpeg[]
+
+https://knowyourmeme.com/memes/im-something-of-a-scientist-myself[**I'm something of a scientist myself**]::
+Triggered by a pattern "I'm something of a <who> myself" or by macro id: "scientist: <who>"
++
+image::./demos/i'm something of a scientist myself.jpeg[]
+
+https://knowyourmeme.com/memes/im-something-of-a-scientist-myself[**I'm something of a scientist myself (ru(**]::
+Triggered by a pattern "Я и сам своего рода <кто-то>" or by macro id: "учёный: <кто-то>"
++
+image::./demos/i'm something of a scientist myself ru.jpeg[]
 
 == Running locally
 
