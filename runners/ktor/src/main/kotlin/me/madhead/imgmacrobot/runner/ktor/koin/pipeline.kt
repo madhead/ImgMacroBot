@@ -7,6 +7,8 @@ import me.madhead.imgmacrobot.core.generators.GoodGoodPalpatine
 import me.madhead.imgmacrobot.core.generators.GoodGoodPalpatineRu
 import me.madhead.imgmacrobot.core.generators.IronicPalpatine
 import me.madhead.imgmacrobot.core.generators.IronicPalpatineRu
+import me.madhead.imgmacrobot.core.generators.OneDoesNotSimply
+import me.madhead.imgmacrobot.core.generators.OneDoesNotSimplyRu
 import me.madhead.imgmacrobot.core.generators.SomethingOfAScientist
 import me.madhead.imgmacrobot.core.generators.SomethingOfAScientistRu
 import me.madhead.imgmacrobot.core.generators.WhatIfIToldYou
@@ -91,6 +93,20 @@ val pipelineModule = module {
                     get<PrometheusMeterRegistry>()
                 ),
                 SomethingOfAScientistRu(
+                    Path(get<ApplicationConfig>().property("templatesDir").getString()),
+                    get(),
+                    get(),
+                    get(),
+                    get<PrometheusMeterRegistry>()
+                ),
+                OneDoesNotSimply(
+                    Path(get<ApplicationConfig>().property("templatesDir").getString()),
+                    get(),
+                    get(),
+                    get(),
+                    get<PrometheusMeterRegistry>()
+                ),
+                OneDoesNotSimplyRu(
                     Path(get<ApplicationConfig>().property("templatesDir").getString()),
                     get(),
                     get(),
