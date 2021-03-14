@@ -13,39 +13,40 @@ import java.nio.file.Path
 import kotlin.io.path.ExperimentalPathApi
 
 /**
- * Morpheus from the "The Matrix" trying to tell you something.
+ * Norman Osborn about his scientific expertise.
  */
 @ExperimentalPathApi
-class WhatIfIToldYou(
+class SomethingOfAScientist(
     templatesDir: Path,
     imgur: Imgur,
     fontCollection: FontCollection,
     cachedInlineQueryResultDAO: CachedInlineQueryResultDAO,
     registry: MeterRegistry,
-) : ParagraphsImageMacroGenerator<WhatIfIToldYouParsedInlineQuery>(
+) : ParagraphsImageMacroGenerator<SomethingOfAScientistParsedInlineQuery>(
     templatesDir,
-    "what if i told you.png",
+    "something of a scientist.png",
     imgur,
     fontCollection,
     cachedInlineQueryResultDAO,
     registry,
 ) {
     companion object {
-        private val macroIdRegex = "Morpheus:(\\s*)(?<what>.+)".toRegex(RegexOption.IGNORE_CASE)
-        private val regex = "What +if +I +told +you ++(?<what>.+)".toRegex(RegexOption.IGNORE_CASE)
+        private val macroIdRegex = "scientist:(\\s*)(?<who>.+)".toRegex(RegexOption.IGNORE_CASE)
+        private val regex = "(You know, +)?((I'?m)|(I +am)) +something +of(( +a +)|( +))(?<who>.+?)(( +myself)|(\\p{Punct}.*))?"
+            .toRegex(RegexOption.IGNORE_CASE)
     }
 
-    override fun parseInlineQuery(inlineQuery: InlineQuery): WhatIfIToldYouParsedInlineQuery? {
-        return macroIdRegex.matchEntire(inlineQuery.query)?.groups?.get("what")?.let { WhatIfIToldYouParsedInlineQuery(it.value) }
-            ?: regex.matchEntire(inlineQuery.query)?.groups?.get("what")?.let { WhatIfIToldYouParsedInlineQuery(it.value) }
+    override fun parseInlineQuery(inlineQuery: InlineQuery): SomethingOfAScientistParsedInlineQuery? {
+        return macroIdRegex.matchEntire(inlineQuery.query)?.groups?.get("who")?.let { SomethingOfAScientistParsedInlineQuery(it.value) }
+            ?: regex.matchEntire(inlineQuery.query)?.groups?.get("who")?.let { SomethingOfAScientistParsedInlineQuery(it.value) }
     }
 
-    override fun drawParagraphs(template: Image, canvas: Canvas, parsedInlineQuery: WhatIfIToldYouParsedInlineQuery) {
-        imageMacroParagraph("WHAT IF I TOLD YOU") {
+    override fun drawParagraphs(template: Image, canvas: Canvas, parsedInlineQuery: SomethingOfAScientistParsedInlineQuery) {
+        imageMacroParagraph("YOU KNOW") {
             layout(template.width.toFloat())
             paint(canvas, @Suppress("MagicNumber") 0F, @Suppress("MagicNumber") 10F)
         }
-        imageMacroParagraph(parsedInlineQuery.whatIfYouToldMeWhat.toUpperCase()) {
+        imageMacroParagraph("I'm something of a ${parsedInlineQuery.who} myself".toUpperCase()) {
             layout(@Suppress("MagicNumber") 0.9F * template.width.toFloat())
             paint(canvas, @Suppress("MagicNumber") 0.05F * template.width, template.height - @Suppress("MagicNumber") 10 - height)
         }
@@ -53,13 +54,13 @@ class WhatIfIToldYou(
 }
 
 /**
- * [ParsedInlineQuery] implementation for [WhatIfIToldYou].
+ * [ParsedInlineQuery] implementation for [SomethingOfAScientist].
  *
- * @property whatIfYouToldMeWhat so what is Morpheus trying to told us?
+ * @property who something of what occupation?
  */
-data class WhatIfIToldYouParsedInlineQuery(
-    val whatIfYouToldMeWhat: String
+data class SomethingOfAScientistParsedInlineQuery(
+    val who: String
 ) : ParsedInlineQuery {
     override val discriminator: String
-        get() = whatIfYouToldMeWhat
+        get() = who
 }
