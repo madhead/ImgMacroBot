@@ -6,6 +6,7 @@ plugins {
     kotlin("jvm").version(Versions.Plugins.KOTLIN).apply(false)
     kotlin("plugin.serialization").version(Versions.Plugins.KOTLIN).apply(false)
     id("io.gitlab.arturbosch.detekt").version(Versions.Plugins.DETEKT).apply(false)
+    id("org.liquibase.gradle").version(Versions.Plugins.LIQUIBASE).apply(false)
 }
 
 allprojects {
@@ -15,6 +16,12 @@ allprojects {
         mavenCentral()
         jcenter()
         maven("https://packages.jetbrains.team/maven/p/skija/maven")
+    }
+
+    dependencies {
+        val detektPlugins by configurations
+
+        detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:${Versions.Plugins.DETEKT}")
     }
 
     configure<DetektExtension> {

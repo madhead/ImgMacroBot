@@ -7,6 +7,13 @@
 				<EventEol>true</EventEol>
 			</JsonLayout>
 		</Console>
+		<!--		<Console name="STDOUT" target="SYSTEM_OUT">-->
+		<!--			<PatternLayout>-->
+		<!--				<pattern>-->
+		<!--					%d{ISO8601}{UTC} [%-5p] [%t] [%c{1.}]: %m%n-->
+		<!--				</pattern>>-->
+		<!--			</PatternLayout>-->
+		<!--		</Console>-->
 	</Appenders>
 
 	<Loggers>

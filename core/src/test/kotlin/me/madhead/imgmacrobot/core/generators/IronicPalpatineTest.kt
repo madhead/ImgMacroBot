@@ -8,7 +8,6 @@ import io.micrometer.core.instrument.simple.SimpleMeterRegistry
 import io.mockk.mockk
 import me.madhead.imgmacrobot.core.dao.CachedInlineQueryResultDAO
 import me.madhead.imgmacrobot.imgur.Imgur
-import org.jetbrains.skija.paragraph.FontCollection
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.params.ParameterizedTest
@@ -19,17 +18,16 @@ import kotlin.io.path.ExperimentalPathApi
 
 @ExperimentalPathApi
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-internal class WhatIfIToldYouTest {
+internal class IronicPalpatineTest {
     private val templatesDir = mockk<Path>()
     private val imgur = mockk<Imgur>()
-    private val fontCollection = mockk<FontCollection>()
     private val cachedInlineQueryResultDAO = mockk<CachedInlineQueryResultDAO>()
     private val registry = SimpleMeterRegistry()
-    private val sut = WhatIfIToldYou(templatesDir, imgur, fontCollection, cachedInlineQueryResultDAO, registry)
+    private val sut = IronicPalpatine(templatesDir, imgur, cachedInlineQueryResultDAO, registry)
 
     @ParameterizedTest
     @MethodSource("parseInlineQueryParams")
-    fun parseInlineQuery(inlineQuery: InlineQuery, parsedInlineQuery: WhatIfIToldYouParsedInlineQuery?) {
+    fun parseInlineQuery(inlineQuery: InlineQuery, parsedInlineQuery: IronicPalpatineParsedInlineQuery?) {
         val actual = sut.parseInlineQuery(inlineQuery)
 
         Assertions.assertEquals(parsedInlineQuery, actual)
@@ -44,27 +42,27 @@ internal class WhatIfIToldYouTest {
 
         return listOf(
             Arguments.of(
-                BaseInlineQuery(id = "", from = user, query = "What if I told you that Morpheus never said that", offset = ""),
-                WhatIfIToldYouParsedInlineQuery("that Morpheus never said that")
+                BaseInlineQuery(id = "", from = user, query = "ironic", offset = ""),
+                IronicPalpatineParsedInlineQuery
             ),
             Arguments.of(
-                BaseInlineQuery(id = "", from = user, query = "wHaT   iF i   ToLd yOu that Morpheus never said that", offset = ""),
-                WhatIfIToldYouParsedInlineQuery("that Morpheus never said that")
+                BaseInlineQuery(id = "", from = user, query = "ironi", offset = ""),
+                IronicPalpatineParsedInlineQuery
             ),
             Arguments.of(
-                BaseInlineQuery(id = "", from = user, query = "What if I told you", offset = ""),
+                BaseInlineQuery(id = "", from = user, query = "ironic situation", offset = ""),
+                IronicPalpatineParsedInlineQuery
+            ),
+            Arguments.of(
+                BaseInlineQuery(id = "", from = user, query = "situation is ironic", offset = ""),
+                IronicPalpatineParsedInlineQuery
+            ),
+            Arguments.of(
+                BaseInlineQuery(id = "", from = user, query = "", offset = ""),
                 null
             ),
             Arguments.of(
-                BaseInlineQuery(id = "", from = user, query = "What if I told you       ", offset = ""),
-                null
-            ),
-            Arguments.of(
-                BaseInlineQuery(id = "", from = user, query = "What if I told you…", offset = ""),
-                null
-            ),
-            Arguments.of(
-                BaseInlineQuery(id = "", from = user, query = "What if you told me your secret?", offset = ""),
+                BaseInlineQuery(id = "", from = user, query = "execute order 66", offset = ""),
                 null
             ),
         )

@@ -16,6 +16,11 @@ bot:
     token: "{{ lookup('env', 'TELEGRAM_TOKEN') }}"
   imgur:
     clientId: "{{ lookup('env', 'IMGUR_CLIENT_ID') }}"
+  db:
+    tnsName: "{{ lookup('env', 'DB_TNSNAME') }}"
+    tnsAdmin: "{{ lookup('env', 'DB_TNSADMIN') }}"
+    user: "{{ lookup('env', 'DB_USER') }}"
+    password: "{{ lookup('env', 'DB_PASSWORD') }}"
 
 grafana:
   cloud:

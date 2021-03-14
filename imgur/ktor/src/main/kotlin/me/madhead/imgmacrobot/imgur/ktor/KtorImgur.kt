@@ -29,8 +29,8 @@ import org.apache.logging.log4j.LogManager
  * [Ktor-based](https://ktor.io) [Imgur] implementation.
  */
 class KtorImgur(
-        private val clientId: String? = null,
-        private val limits: MultiGauge? = null,
+    private val clientId: String? = null,
+    private val limits: MultiGauge? = null,
 ) : Imgur {
     companion object {
         private val logger = LogManager.getLogger(KtorImgur::class.java)!!
@@ -68,56 +68,56 @@ class KtorImgur(
     }
 
     private suspend fun upload(request: ImageUploadRequest) =
-            client.submitFormWithBinaryData<HttpResponse>(
-                    formData {
-                        append(
-                                key = "image",
-                                value = request.image,
-                                headers = Headers.build {
-                                    request.name?.let {
-                                        this[HttpHeaders.ContentDisposition] = "filename=\"${request.name}\""
-                                    }
-                                }
-                        )
+        client.submitFormWithBinaryData<HttpResponse>(
+            formData {
+                append(
+                    key = "image",
+                    value = request.image,
+                    headers = Headers.build {
                         request.name?.let {
-                            append("name", it)
-                        }
-                        request.title?.let {
-                            append("title", it)
-                        }
-                        request.description?.let {
-                            append("description", it)
+                            this[HttpHeaders.ContentDisposition] = "filename=\"${request.name}\""
                         }
                     }
-            ) {
-                url("https://api.imgur.com/3/upload")
-                clientId?.let {
-                    header("Authorization", "Client-ID ${it}")
+                )
+                request.name?.let {
+                    append("name", it)
+                }
+                request.title?.let {
+                    append("title", it)
+                }
+                request.description?.let {
+                    append("description", it)
                 }
             }
+        ) {
+            url("https://api.imgur.com/3/upload")
+            clientId?.let {
+                header("Authorization", "Client-ID $it")
+            }
+        }
 
     private fun updateMetrics(response: HttpResponse) =
-            limits?.let {
-                val limitsHeaders = listOf(
-                        "X-Post-Rate-Limit-Limit",
-                        "X-Post-Rate-Limit-Remaining",
-                        "X-RateLimit-ClientLimit",
-                        "X-RateLimit-ClientRemaining",
-                        "X-RateLimit-UserLimit",
-                        "X-RateLimit-UserRemaining",
-                        "X-Post-Rate-Limit-Reset",
-                        "X-Ratelimit-Userreset",
-                )
+        limits?.let {
+            val limitsHeaders = listOf(
+                "X-Post-Rate-Limit-Limit",
+                "X-Post-Rate-Limit-Remaining",
+                "X-RateLimit-ClientLimit",
+                "X-RateLimit-ClientRemaining",
+                "X-RateLimit-UserLimit",
+                "X-RateLimit-UserRemaining",
+                "X-Post-Rate-Limit-Reset",
+                "X-Ratelimit-Userreset",
+            )
 
-                it.register(
-                        limitsHeaders
-                                .map { header ->
-                                    MultiGauge.Row.of(
-                                            Tags.of("limit", header),
-                                            response.headers[header]?.toDoubleOrNull() ?: 0
-                                    )
-                                },
-                        true
-                )
-            }
+            it.register(
+                limitsHeaders
+                    .map { header ->
+                        MultiGauge.Row.of(
+                            Tags.of("limit", header),
+                            response.headers[header]?.toDoubleOrNull() ?: 0
+                        )
+                    },
+                true
+            )
+        }
 }

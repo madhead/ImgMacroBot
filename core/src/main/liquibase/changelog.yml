@@ -1,0 +1,18 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: madhead
+      changes:
+        - sqlFile:
+            path: ../sql/timestamp.init.sql
+            relativeToChangelogFile: true
+        - sqlFile:
+            path: ../sql/cached_inline_query_results.init.sql
+            relativeToChangelogFile: true
+      rollback:
+        - sqlFile:
+            path: ../sql/cached_inline_query_results.deinit.sql
+            relativeToChangelogFile: true
+        - sqlFile:
+            path: ../sql/timestamp.deinit.sql
+            relativeToChangelogFile: true

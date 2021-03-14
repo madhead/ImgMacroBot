@@ -12,8 +12,8 @@ import org.koin.dsl.module
 val imgurModule = module {
     single<Imgur> {
         KtorImgur(
-                get<ApplicationConfig>().property("imgur.clientId").getString(),
-                get(named(IMGUR_RATE_LIMITS)),
+            get<ApplicationConfig>().property("imgur.clientId").getString(),
+            get(named(IMGUR_RATE_LIMITS)),
         )
     }
 }
