@@ -2,6 +2,25 @@
 
 Telegram inline bot who helps you generate your favourite image macros on the fly.
 
+== Usage
+
+ImgMacroBot is an https://core.telegram.org/bots/inline[inline bot].
+It means that it is triggered by a mention in any chat.
+To generate an image macro you should type a query, like `@ImgMacroBot <query>`.
+For the list of supported queries read <<supported_image_macros, Supported image macros>>.
+
+[#supported_image_macros]
+== Supported image macros
+
+https://knowyourmeme.com/memes/emperor-palpatine-ironic[**Ironic Palpatine**]::
+Triggered by a phrase containing "ironic" substring.
++
+image::./demos/ironic palpatine.jpeg[]
+https://knowyourmeme.com/memes/matrix-morpheus[**Matrix Morpheus**]::
+Triggered by a pattern "What if I told you <something>".
++
+image::./demos/matrix morpheus.jpeg[]
+
 == Running locally
 
 . Define the required environment variables in `.env` file in the root of the project.
@@ -14,6 +33,19 @@ Absolute path to the link:templates[`templates`] directory of this project.
 Absolute path to the link:fonts[`fonts`] directory of this project.
 `IMGUR_CLIENT_ID`::
 https://apidocs.imgur.com[Imgur API] client ID.
+`DB_TNSNAME`::
+This bot is intended to be deployed into https://www.oracle.com/cloud/free[Oracle's Always Free] Compute VM and use Oracle's Always Free ATP database.
+This variable designates the TNS name for the database used to cache Imgur links.
+`DB_TNSADMIN`::
+This bot is intended to be deployed into https://www.oracle.com/cloud/free[Oracle's Always Free] Compute VM and use Oracle's Always Free ATP database.
+ATP connection are made https://www.oracle.com/database/technologies/getting-started-using-jdbc.html[using wallets].
+This variable points to a wallet directory.
+`DB_USER`::
+This bot is intended to be deployed into https://www.oracle.com/cloud/free[Oracle's Always Free] Compute VM and use Oracle's Always Free ATP database.
+This variable is for ATP user.
+`DB_PASSWORD`::
+This bot is intended to be deployed into https://www.oracle.com/cloud/free[Oracle's Always Free] Compute VM and use Oracle's Always Free ATP database.
+This variable is for ATP user's password.
 `IMGMACROBOT_LOG_THRESHOLD`::
 Optional.
 Logging threshold: logs with levels below given won't be logged.
