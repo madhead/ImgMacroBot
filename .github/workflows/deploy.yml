@@ -69,3 +69,7 @@ jobs:
           GRAFANA_CLOUD_GRAFANA_URL: ${{ secrets.GRAFANA_CLOUD_GRAFANA_URL }}
           GRAFANA_CLOUD_GRAFANA_API_KEY: ${{ secrets.GRAFANA_CLOUD_GRAFANA_API_KEY }}
           IMGUR_CLIENT_ID: ${{ secrets.IMGUR_CLIENT_ID }}
+          DB_TNSNAME: ${{ secrets.DB_TNSNAME }}
+          DB_TNSADMIN: ${{ secrets.DB_TNSADMIN }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
