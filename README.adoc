@@ -62,6 +62,29 @@ Triggered by a pattern "Нельзя просто так взять и <сдел
 +
 image::./demos/one does not simply walk into mordor ru.jpeg[]
 
+https://memepedia.ru/malchik-ty-ne-ponyal-vodochki-nam-prinesi-my-domoj-letim/[**Водочки нам принеси!**]::
+Triggered by a macro ID "водочки" accepting 4 arguments separated with commas:
++
+--
+* What thing the boy has to bring?
+* Whom the boy has to bring the thing?
+* Who wants the thing?
+* Action performed by that "who"
+
+Like: "водочки: водочки, нам, мы, домой летим".
+If you've seen "Брат 2", you got the idea, if you haven't — just pass by.
+
+image::./demos/vodochki.jpeg[]
+
+Another way to use this macro is by a phrase matching pattern "<что-то> <кому-то> принеси, <кто-то> <что-то делает>".
+As you see, the key here is "принеси" word, and the bot will do its best to match other parts.
+If it fails — try using it by macro ID.
+
+Here is an example of calling "@ImgMacroBot девочка, спиртику нам принеси, мы ручки дезинфицировать будем":
+
+image::./demos/vodochki phrase.jpeg[]
+--
+
 == Running locally
 
 . Define the required environment variables in `.env` file in the root of the project.
