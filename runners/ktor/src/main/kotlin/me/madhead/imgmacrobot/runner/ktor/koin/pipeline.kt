@@ -11,6 +11,7 @@ import me.madhead.imgmacrobot.core.generators.OneDoesNotSimply
 import me.madhead.imgmacrobot.core.generators.OneDoesNotSimplyRu
 import me.madhead.imgmacrobot.core.generators.SomethingOfAScientist
 import me.madhead.imgmacrobot.core.generators.SomethingOfAScientistRu
+import me.madhead.imgmacrobot.core.generators.VodochkiNam
 import me.madhead.imgmacrobot.core.generators.WhatIfIToldYou
 import me.madhead.imgmacrobot.core.generators.WhatIfIToldYouRu
 import org.jetbrains.skija.Data
@@ -107,6 +108,13 @@ val pipelineModule = module {
                     get<PrometheusMeterRegistry>()
                 ),
                 OneDoesNotSimplyRu(
+                    Path(get<ApplicationConfig>().property("templatesDir").getString()),
+                    get(),
+                    get(),
+                    get(),
+                    get<PrometheusMeterRegistry>()
+                ),
+                VodochkiNam(
                     Path(get<ApplicationConfig>().property("templatesDir").getString()),
                     get(),
                     get(),
