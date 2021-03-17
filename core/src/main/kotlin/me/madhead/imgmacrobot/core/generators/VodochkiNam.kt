@@ -32,10 +32,10 @@ class VodochkiNam(
 ) {
     companion object {
         private val macroIdRegex =
-            "водочки:(\\s*)(?<bringWhat>.+?)(\\s*),(\\s*)(?<whom>.+?)(\\s*),(\\s*)(?<who>.+?)(\\s*),(\\s*)(?<doWhat>.+)"
+            "водочки:(\\s*)(?<top>.+?)(\\s*),(\\s*)(?<bottom>.+?)"
                 .toRegex(RegexOption.IGNORE_CASE)
         private val regex =
-            "((.*ты не понял\\p{P}(\\s+))++)?(?<bringWhat>.+?)(\\s+)(?<whom>.+?)(\\s+)принеси,?(\\s+)(?<who>.+?) (?<doWhat>.+)"
+            "(?<top>.+ принеси)(\\s*)\\p{P}?(\\s*)(?<bottom>.+)"
                 .toRegex(RegexOption.IGNORE_CASE)
     }
 
@@ -43,28 +43,24 @@ class VodochkiNam(
     override fun parseInlineQuery(inlineQuery: InlineQuery): VodochkiNamParsedInlineQuery? {
         return macroIdRegex.matchEntire(inlineQuery.query)?.groups?.let { groups ->
             VodochkiNamParsedInlineQuery(
-                groups["bringWhat"]?.value ?: return null,
-                groups["whom"]?.value ?: return null,
-                groups["who"]?.value ?: return null,
-                groups["doWhat"]?.value ?: return null,
+                groups["top"]?.value ?: return null,
+                groups["bottom"]?.value ?: return null,
             )
         }
             ?: regex.matchEntire(inlineQuery.query)?.groups?.let { groups ->
                 VodochkiNamParsedInlineQuery(
-                    groups["bringWhat"]?.value ?: return null,
-                    groups["whom"]?.value ?: return null,
-                    groups["who"]?.value ?: return null,
-                    groups["doWhat"]?.value ?: return null,
+                    groups["top"]?.value ?: return null,
+                    groups["bottom"]?.value ?: return null,
                 )
             }
     }
 
     override fun drawParagraphs(template: Image, canvas: Canvas, parsedInlineQuery: VodochkiNamParsedInlineQuery) {
-        imageMacroParagraph("${parsedInlineQuery.bringWhat} ${parsedInlineQuery.whom} ПРИНЕСИ".toUpperCase()) {
-            layout(template.width.toFloat())
+        imageMacroParagraph(parsedInlineQuery.top.toUpperCase()) {
+            layout(@Suppress("MagicNumber") 0.9F * template.width.toFloat())
             paint(canvas, @Suppress("MagicNumber") 0F, @Suppress("MagicNumber") 10F)
         }
-        imageMacroParagraph("${parsedInlineQuery.who} ${parsedInlineQuery.doWhat}".toUpperCase()) {
+        imageMacroParagraph(parsedInlineQuery.bottom.toUpperCase()) {
             layout(@Suppress("MagicNumber") 0.9F * template.width.toFloat())
             paint(canvas, @Suppress("MagicNumber") 0.05F * template.width, template.height - @Suppress("MagicNumber") 10 - height)
         }
@@ -74,17 +70,13 @@ class VodochkiNam(
 /**
  * [ParsedInlineQuery] implementation for [VodochkiNam].
  *
- * @property bringWhat what has the malchik to bring us?
- * @property whom whom has the malchink to bring some vodochka?
- * @property who who does something extraordinary so that the malchik has to bring them some vodochka?
- * @property doWhat what do we do, so that the malchik has to bring us some vodochka?
+ * @property top top text.
+ * @property bottom bottom text.
  */
 data class VodochkiNamParsedInlineQuery(
-    val bringWhat: String,
-    val whom: String,
-    val who: String,
-    val doWhat: String,
+    val top: String,
+    val bottom: String,
 ) : ParsedInlineQuery {
     override val discriminator: String
-        get() = "$bringWhat/$whom/$who/$doWhat"
+        get() = "$top/$bottom"
 }
