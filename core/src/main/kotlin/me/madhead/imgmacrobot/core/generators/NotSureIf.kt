@@ -13,18 +13,18 @@ import java.nio.file.Path
 import kotlin.io.path.ExperimentalPathApi
 
 /**
- * Fry is eager to spend his money.
+ * Fry is unsure.
  */
 @ExperimentalPathApi
-class TakeMyMoney(
+class NotSureIf(
     templatesDir: Path,
     imgur: Imgur,
     fontCollection: FontCollection,
     cachedInlineQueryResultDAO: CachedInlineQueryResultDAO,
     registry: MeterRegistry,
-) : ParagraphsImageMacroGenerator<TakeMyMoneyParsedInlineQuery>(
+) : ParagraphsImageMacroGenerator<NotSureIfParsedInlineQuery>(
     templatesDir,
-    "take my money.png",
+    "not sure.png",
     imgur,
     fontCollection,
     cachedInlineQueryResultDAO,
@@ -32,30 +32,30 @@ class TakeMyMoney(
 ) {
     companion object {
         private val macroIdRegex =
-            "take my money:(\\s*)(?<top>.+?)(\\s*),(\\s*)(?<bottom>.+?)"
+            "not sure( if)?:(\\s*)(?<top>.+?)(\\s*),(\\s*)(?<bottom>.+?)"
                 .toRegex(RegexOption.IGNORE_CASE)
         private val regex =
-            "(?<top>shut up( and)?)(\\s*)\\p{P}?(\\s*)(?<bottom>take(\\s*)my.+)"
+            "(?<top>Not sure if.+?)(\\s*)\\p{P}?(\\s*)(?<bottom>or just .+)"
                 .toRegex(RegexOption.IGNORE_CASE)
     }
 
     @Suppress("ReturnCount")
-    override fun parseInlineQuery(inlineQuery: InlineQuery): TakeMyMoneyParsedInlineQuery? {
+    override fun parseInlineQuery(inlineQuery: InlineQuery): NotSureIfParsedInlineQuery? {
         return macroIdRegex.matchEntire(inlineQuery.query)?.groups?.let { groups ->
-            TakeMyMoneyParsedInlineQuery(
+            NotSureIfParsedInlineQuery(
                 groups["top"]?.value ?: return null,
                 groups["bottom"]?.value ?: return null,
             )
         }
             ?: regex.matchEntire(inlineQuery.query)?.groups?.let { groups ->
-                TakeMyMoneyParsedInlineQuery(
+                NotSureIfParsedInlineQuery(
                     groups["top"]?.value ?: return null,
                     groups["bottom"]?.value ?: return null,
                 )
             }
     }
 
-    override fun drawParagraphs(template: Image, canvas: Canvas, parsedInlineQuery: TakeMyMoneyParsedInlineQuery) {
+    override fun drawParagraphs(template: Image, canvas: Canvas, parsedInlineQuery: NotSureIfParsedInlineQuery) {
         imageMacroParagraph(parsedInlineQuery.top.toUpperCase()) {
             layout(@Suppress("MagicNumber") 0.9F * template.width.toFloat())
             paint(canvas, @Suppress("MagicNumber") 0.05F * template.width, @Suppress("MagicNumber") 10F)
@@ -68,12 +68,12 @@ class TakeMyMoney(
 }
 
 /**
- * [ParsedInlineQuery] implementation for [TakeMyMoney].
+ * [ParsedInlineQuery] implementation for [NotSureIf].
  *
  * @property top top text.
  * @property bottom bottom text.
  */
-data class TakeMyMoneyParsedInlineQuery(
+data class NotSureIfParsedInlineQuery(
     val top: String,
     val bottom: String,
 ) : ParsedInlineQuery {
