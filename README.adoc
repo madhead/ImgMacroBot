@@ -63,21 +63,16 @@ Triggered by a pattern "Нельзя просто так взять и <сдел
 image::./demos/one does not simply walk into mordor ru.jpeg[]
 
 https://memepedia.ru/malchik-ty-ne-ponyal-vodochki-nam-prinesi-my-domoj-letim/[**Водочки нам принеси!**]::
-Triggered by a macro ID "водочки" accepting 4 arguments separated with commas:
+Triggered by a macro ID "водочки" accepting 2 arguments separated with commas: top and bottom text
 +
 --
-* What thing the boy has to bring?
-* Whom the boy has to bring the thing?
-* Who wants the thing?
-* Action performed by that "who"
-
-Like: "водочки: водочки, нам, мы, домой летим".
+Like: "водочки: Водочки нам принеси, мы домой летим".
 If you've seen "Брат 2", you got the idea, if you haven't — just pass by.
 
 image::./demos/vodochki.jpeg[]
 
-Another way to use this macro is by a phrase matching pattern "<что-то> <кому-то> принеси, <кто-то> <что-то делает>".
-As you see, the key here is "принеси" word, and the bot will do its best to match other parts.
+Another way to use this macro is by a phrase matching pattern "<текст> принеси, <нижняя строка>".
+As you see, the key here is "принеси" word, and the bot will do its best to match top and bottom parts.
 If it fails — try using it by macro ID.
 
 Here is an example of calling "@ImgMacroBot девочка, спиртику нам принеси, мы ручки дезинфицировать будем":

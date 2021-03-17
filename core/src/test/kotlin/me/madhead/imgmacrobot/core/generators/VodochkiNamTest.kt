@@ -44,36 +44,44 @@ internal class VodochkiNamTest {
 
         return listOf(
             Arguments.of(
-                BaseInlineQuery(id = "", from = user, query = "водочки: водочки, нам, мы, домой летим", offset = ""),
-                VodochkiNamParsedInlineQuery("водочки", "нам", "мы", "домой летим")
+                BaseInlineQuery(id = "", from = user, query = "водочки: водочки нам принеси, мы домой летим", offset = ""),
+                VodochkiNamParsedInlineQuery("водочки нам принеси", "мы домой летим")
             ),
             Arguments.of(
-                BaseInlineQuery(id = "", from = user, query = "водочки:  \t    водочки  \t   ,  нам, \t   мы, \t домой летим", offset = ""),
-                VodochkiNamParsedInlineQuery("водочки", "нам", "мы", "домой летим")
+                BaseInlineQuery(id = "", from = user, query = "водочки: водочки нам принеси     , \t          мы домой летим", offset = ""),
+                VodochkiNamParsedInlineQuery("водочки нам принеси", "мы домой летим")
             ),
             Arguments.of(
                 BaseInlineQuery(id = "", from = user, query = "Мальчик, ты не понял. Водочки нам принеси, мы домой летим!", offset = ""),
-                VodochkiNamParsedInlineQuery("Водочки", "нам", "мы", "домой летим!")
+                VodochkiNamParsedInlineQuery("Мальчик, ты не понял. Водочки нам принеси", "мы домой летим!")
+            ),
+            Arguments.of(
+                BaseInlineQuery(id = "", from = user, query = "Девочка, ты не поняла. Водочки нам принеси, мы домой летим!", offset = ""),
+                VodochkiNamParsedInlineQuery("Девочка, ты не поняла. Водочки нам принеси", "мы домой летим!")
             ),
             Arguments.of(
                 BaseInlineQuery(id = "", from = user, query = "Водочки нам принеси, мы домой летим!", offset = ""),
-                VodochkiNamParsedInlineQuery("Водочки", "нам", "мы", "домой летим!")
+                VodochkiNamParsedInlineQuery("Водочки нам принеси", "мы домой летим!")
             ),
             Arguments.of(
                 BaseInlineQuery(id = "", from = user, query = "Денежки нам принеси, мы в налоговой работаем", offset = ""),
-                VodochkiNamParsedInlineQuery("Денежки", "нам", "мы", "в налоговой работаем")
+                VodochkiNamParsedInlineQuery("Денежки нам принеси", "мы в налоговой работаем")
             ),
             Arguments.of(
                 BaseInlineQuery(id = "", from = user, query = "Клавиатурку мне принеси, я программистом работаю", offset = ""),
-                VodochkiNamParsedInlineQuery("Клавиатурку", "мне", "я", "программистом работаю")
+                VodochkiNamParsedInlineQuery("Клавиатурку мне принеси", "я программистом работаю")
             ),
             Arguments.of(
                 BaseInlineQuery(id = "", from = user, query = "Мячик Пете принеси, он в футбол играть будет", offset = ""),
-                VodochkiNamParsedInlineQuery("Мячик", "Пете", "он", "в футбол играть будет")
+                VodochkiNamParsedInlineQuery("Мячик Пете принеси", "он в футбол играть будет")
             ),
             Arguments.of(
                 BaseInlineQuery(id = "", from = user, query = "Мячик Пете принеси он в футбол играть будет", offset = ""),
-                VodochkiNamParsedInlineQuery("Мячик", "Пете", "он", "в футбол играть будет")
+                VodochkiNamParsedInlineQuery("Мячик Пете принеси", "он в футбол играть будет")
+            ),
+            Arguments.of(
+                BaseInlineQuery(id = "", from = user, query = "Пивка нам принеси, мы рыбу в кляре готовить будем!", offset = ""),
+                VodochkiNamParsedInlineQuery("Пивка нам принеси", "мы рыбу в кляре готовить будем!")
             ),
             Arguments.of(
                 BaseInlineQuery(id = "", from = user, query = "Молодой человек, мы, русские, не обманываем друг друга!", offset = ""),
