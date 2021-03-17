@@ -42,8 +42,8 @@ class OneDoesNotSimply(
 
     override fun drawParagraphs(template: Image, canvas: Canvas, parsedInlineQuery: OneDoesNotSimplyParsedInlineQuery) {
         imageMacroParagraph(text = "ONE DOES NOT SIMPLY", size = 32F) {
-            layout(template.width.toFloat())
-            paint(canvas, @Suppress("MagicNumber") 0F, @Suppress("MagicNumber") 10F)
+            layout(@Suppress("MagicNumber") 0.9F * template.width.toFloat())
+            paint(canvas, @Suppress("MagicNumber") 0.05F * template.width, @Suppress("MagicNumber") 10F)
         }
         imageMacroParagraph(text = parsedInlineQuery.doWhat.toUpperCase(), size = 32F) {
             layout(@Suppress("MagicNumber") 0.9F * template.width.toFloat())

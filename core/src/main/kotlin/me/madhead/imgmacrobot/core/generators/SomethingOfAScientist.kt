@@ -43,8 +43,8 @@ class SomethingOfAScientist(
 
     override fun drawParagraphs(template: Image, canvas: Canvas, parsedInlineQuery: SomethingOfAScientistParsedInlineQuery) {
         imageMacroParagraph("YOU KNOW") {
-            layout(template.width.toFloat())
-            paint(canvas, @Suppress("MagicNumber") 0F, @Suppress("MagicNumber") 10F)
+            layout(@Suppress("MagicNumber") 0.9F * template.width.toFloat())
+            paint(canvas, @Suppress("MagicNumber") 0.05F * template.width, @Suppress("MagicNumber") 10F)
         }
         imageMacroParagraph("I'm something of a ${parsedInlineQuery.who} myself".toUpperCase()) {
             layout(@Suppress("MagicNumber") 0.9F * template.width.toFloat())

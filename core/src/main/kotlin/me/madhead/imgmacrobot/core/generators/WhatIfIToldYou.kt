@@ -42,8 +42,8 @@ class WhatIfIToldYou(
 
     override fun drawParagraphs(template: Image, canvas: Canvas, parsedInlineQuery: WhatIfIToldYouParsedInlineQuery) {
         imageMacroParagraph("WHAT IF I TOLD YOU") {
-            layout(template.width.toFloat())
-            paint(canvas, @Suppress("MagicNumber") 0F, @Suppress("MagicNumber") 10F)
+            layout(@Suppress("MagicNumber") 0.9F * template.width.toFloat())
+            paint(canvas, @Suppress("MagicNumber") 0.05F * template.width, @Suppress("MagicNumber") 10F)
         }
         imageMacroParagraph(parsedInlineQuery.whatIfYouToldMeWhat.toUpperCase()) {
             layout(@Suppress("MagicNumber") 0.9F * template.width.toFloat())
