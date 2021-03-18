@@ -13,18 +13,18 @@ import java.nio.file.Path
 import kotlin.io.path.ExperimentalPathApi
 
 /**
- * Malchik, vodochki nam prinesi!
+ * Morpheus from the "The Matrix" trying to tell you something.
  */
 @ExperimentalPathApi
-class VodochkiNam(
+class TakeMyMoney(
     templatesDir: Path,
     imgur: Imgur,
     fontCollection: FontCollection,
     cachedInlineQueryResultDAO: CachedInlineQueryResultDAO,
     registry: MeterRegistry,
-) : ParagraphsImageMacroGenerator<VodochkiNamParsedInlineQuery>(
+) : ParagraphsImageMacroGenerator<TakeMyMoneyParsedInlineQuery>(
     templatesDir,
-    "vodochki.png",
+    "take my money.png",
     imgur,
     fontCollection,
     cachedInlineQueryResultDAO,
@@ -32,30 +32,30 @@ class VodochkiNam(
 ) {
     companion object {
         private val macroIdRegex =
-            "водочки:(\\s*)(?<top>.+?)(\\s*),(\\s*)(?<bottom>.+?)"
+            "take my money:(\\s*)(?<top>.+?)(\\s*),(\\s*)(?<bottom>.+?)"
                 .toRegex(RegexOption.IGNORE_CASE)
         private val regex =
-            "(?<top>.+ принеси)(\\s*)\\p{P}?(\\s*)(?<bottom>.+)"
+            "(?<top>shut up( and)?)(\\s*)\\p{P}?(\\s*)(?<bottom>take(\\s*)my.+)"
                 .toRegex(RegexOption.IGNORE_CASE)
     }
 
     @Suppress("ReturnCount")
-    override fun parseInlineQuery(inlineQuery: InlineQuery): VodochkiNamParsedInlineQuery? {
+    override fun parseInlineQuery(inlineQuery: InlineQuery): TakeMyMoneyParsedInlineQuery? {
         return macroIdRegex.matchEntire(inlineQuery.query)?.groups?.let { groups ->
-            VodochkiNamParsedInlineQuery(
+            TakeMyMoneyParsedInlineQuery(
                 groups["top"]?.value ?: return null,
                 groups["bottom"]?.value ?: return null,
             )
         }
             ?: regex.matchEntire(inlineQuery.query)?.groups?.let { groups ->
-                VodochkiNamParsedInlineQuery(
+                TakeMyMoneyParsedInlineQuery(
                     groups["top"]?.value ?: return null,
                     groups["bottom"]?.value ?: return null,
                 )
             }
     }
 
-    override fun drawParagraphs(template: Image, canvas: Canvas, parsedInlineQuery: VodochkiNamParsedInlineQuery) {
+    override fun drawParagraphs(template: Image, canvas: Canvas, parsedInlineQuery: TakeMyMoneyParsedInlineQuery) {
         imageMacroParagraph(parsedInlineQuery.top.toUpperCase()) {
             layout(@Suppress("MagicNumber") 0.9F * template.width.toFloat())
             paint(canvas, @Suppress("MagicNumber") 0.05F * template.width, @Suppress("MagicNumber") 10F)
@@ -68,12 +68,12 @@ class VodochkiNam(
 }
 
 /**
- * [ParsedInlineQuery] implementation for [VodochkiNam].
+ * [ParsedInlineQuery] implementation for [TakeMyMoney].
  *
  * @property top top text.
  * @property bottom bottom text.
  */
-data class VodochkiNamParsedInlineQuery(
+data class TakeMyMoneyParsedInlineQuery(
     val top: String,
     val bottom: String,
 ) : ParsedInlineQuery {

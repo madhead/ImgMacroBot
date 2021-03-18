@@ -80,6 +80,11 @@ Here is an example of calling "@ImgMacroBot девочка, спиртику н�
 image::./demos/vodochki phrase.jpeg[]
 --
 
+https://knowyourmeme.com/memes/shut-up-and-take-my-money[**Shut Up And Take My Money!**]::
+Triggered by a pattern "shut up and take <something>" or by macro id: "take my money: <top text>, <bottom text>"
++
+image::./demos/take my money.jpeg[]
+
 == Running locally
 
 . Define the required environment variables in `.env` file in the root of the project.
