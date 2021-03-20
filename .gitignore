@@ -10,3 +10,5 @@ templates/*.xcf
 .env
 
 core/src/main/wallet
+
+http-client.private.env.json
