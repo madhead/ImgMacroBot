@@ -85,6 +85,12 @@ Triggered by a pattern "shut up and take <something>" or by macro id: "take my m
 +
 image::./demos/take my money.jpeg[]
 
+https://knowyourmeme.com/memes/say-what-again[**Say What Again!**]::
+Triggered by macro ids: "say what again, "I double dare you", or "I dare you" accepting two placeholders: top and bottom text.
+Here is an example: "@ImgMacroBot say what again: kotlin motherfucker, do you know it?":
++
+image::./demos/say what again.jpeg[]
+
 == Running locally
 
 . Define the required environment variables in `.env` file in the root of the project.

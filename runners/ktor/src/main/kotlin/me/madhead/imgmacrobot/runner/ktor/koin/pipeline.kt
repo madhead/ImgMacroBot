@@ -9,6 +9,7 @@ import me.madhead.imgmacrobot.core.generators.IronicPalpatine
 import me.madhead.imgmacrobot.core.generators.IronicPalpatineRu
 import me.madhead.imgmacrobot.core.generators.OneDoesNotSimply
 import me.madhead.imgmacrobot.core.generators.OneDoesNotSimplyRu
+import me.madhead.imgmacrobot.core.generators.SayWhatAgain
 import me.madhead.imgmacrobot.core.generators.SomethingOfAScientist
 import me.madhead.imgmacrobot.core.generators.SomethingOfAScientistRu
 import me.madhead.imgmacrobot.core.generators.TakeMyMoney
@@ -123,6 +124,13 @@ val pipelineModule = module {
                     get<PrometheusMeterRegistry>()
                 ),
                 TakeMyMoney(
+                    Path(get<ApplicationConfig>().property("templatesDir").getString()),
+                    get(),
+                    get(),
+                    get(),
+                    get<PrometheusMeterRegistry>()
+                ),
+                SayWhatAgain(
                     Path(get<ApplicationConfig>().property("templatesDir").getString()),
                     get(),
                     get(),
