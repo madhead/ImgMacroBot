@@ -91,6 +91,12 @@ Here is an example: "@ImgMacroBot say what again: kotlin motherfucker, do you kn
 +
 image::./demos/say what again.jpeg[]
 
+[**Artemon**]::
+A meme from soviet Pinocchio movie adaptation, triggered by a macro id "artemon"".
+Here is an example: "@ImgMacroBot artemon: Артемон, отгрызи ноги этой суке":
++
+image::./demos/artemon.jpeg[]
+
 == Running locally
 
 . Define the required environment variables in `.env` file in the root of the project.
