@@ -97,6 +97,11 @@ Here is an example: "@ImgMacroBot artemon: Артемон, отгрызи ног
 +
 image::./demos/artemon.jpeg[]
 
+https://knowyourmeme.com/memes/futurama-fry-not-sure-if[**Futurama Fry / Not Sure If**]::
+Triggered by a pattern "Not sure if <A>, or just <B>" or by macro ids: "not sure" and "not sure if", accepting two comma-separated arguments: top and bottom text:
++
+image::./demos/not sure.jpeg[]
+
 == Running locally
 
 . Define the required environment variables in `.env` file in the root of the project.
