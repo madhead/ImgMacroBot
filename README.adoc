@@ -102,6 +102,11 @@ Triggered by a pattern "Not sure if <A>, or just <B>" or by macro ids: "not sure
 +
 image::./demos/not sure.jpeg[]
 
+https://knowyourmeme.com/memes/james-franco-first-time[**First Time?**]::
+Triggered by a macro id: "first time", accepting one argument, bottom text:
++
+image::./demos/first time.jpeg[]
+
 == Running locally
 
 . Define the required environment variables in `.env` file in the root of the project.

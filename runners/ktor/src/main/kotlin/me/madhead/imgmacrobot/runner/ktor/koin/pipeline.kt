@@ -4,6 +4,7 @@ import io.ktor.config.ApplicationConfig
 import io.micrometer.prometheus.PrometheusMeterRegistry
 import me.madhead.imgmacrobot.core.ImageMacroGenerationPipeline
 import me.madhead.imgmacrobot.core.generators.Artemon
+import me.madhead.imgmacrobot.core.generators.FirstTime
 import me.madhead.imgmacrobot.core.generators.GoodGoodPalpatine
 import me.madhead.imgmacrobot.core.generators.GoodGoodPalpatineRu
 import me.madhead.imgmacrobot.core.generators.IronicPalpatine
@@ -147,6 +148,13 @@ val pipelineModule = module {
                     get<PrometheusMeterRegistry>()
                 ),
                 NotSureIf(
+                    Path(get<ApplicationConfig>().property("templatesDir").getString()),
+                    get(),
+                    get(),
+                    get(),
+                    get<PrometheusMeterRegistry>()
+                ),
+                FirstTime(
                     Path(get<ApplicationConfig>().property("templatesDir").getString()),
                     get(),
                     get(),
