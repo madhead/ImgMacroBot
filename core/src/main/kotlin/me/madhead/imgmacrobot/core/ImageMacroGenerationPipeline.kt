@@ -2,7 +2,10 @@ package me.madhead.imgmacrobot.core
 
 import dev.inmo.tgbotapi.bot.RequestsExecutor
 import dev.inmo.tgbotapi.extensions.api.answers.answerInlineQuery
+import dev.inmo.tgbotapi.extensions.api.send.reply
+import dev.inmo.tgbotapi.types.ParseMode.MarkdownV2
 import dev.inmo.tgbotapi.types.update.InlineQueryUpdate
+import dev.inmo.tgbotapi.types.update.MessageUpdate
 import dev.inmo.tgbotapi.types.update.abstracts.Update
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -32,6 +35,10 @@ class ImageMacroGenerationPipeline(
      */
     suspend fun process(update: Update) {
         logger.debug("Processing update: {}", update)
+
+        if (update is MessageUpdate) {
+            help(update)
+        }
 
         if (update !is InlineQueryUpdate) {
             logger.info("Update is not an InlineQuery!")
@@ -65,6 +72,17 @@ class ImageMacroGenerationPipeline(
         requestsExecutor.answerInlineQuery(
             inlineQuery = update.data,
             results = results
+        )
+    }
+
+    private suspend fun help(update: MessageUpdate) {
+        requestsExecutor.reply(
+            to = update.data,
+            text = "This is an [inline bot](https://core.telegram.org/bots/inline)\\. " +
+                "Don't send messages to it directly\\. " +
+                "Instead, mention it in a chat, providing a query, like `@ImgMacroBot not sure if <A>, or just <B>`\\.",
+            parseMode = MarkdownV2,
+            disableWebPagePreview = true,
         )
     }
 }
