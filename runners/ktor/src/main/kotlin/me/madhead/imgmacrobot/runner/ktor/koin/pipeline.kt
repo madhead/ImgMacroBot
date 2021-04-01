@@ -7,6 +7,7 @@ import me.madhead.imgmacrobot.core.generators.Artemon
 import me.madhead.imgmacrobot.core.generators.FirstTime
 import me.madhead.imgmacrobot.core.generators.GoodGoodPalpatine
 import me.madhead.imgmacrobot.core.generators.GoodGoodPalpatineRu
+import me.madhead.imgmacrobot.core.generators.HelpGenerator
 import me.madhead.imgmacrobot.core.generators.IronicPalpatine
 import me.madhead.imgmacrobot.core.generators.IronicPalpatineRu
 import me.madhead.imgmacrobot.core.generators.NotSureIf
@@ -161,6 +162,7 @@ val pipelineModule = module {
                     get(),
                     get<PrometheusMeterRegistry>()
                 ),
+                HelpGenerator()
             ),
             get(),
         )
