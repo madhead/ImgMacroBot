@@ -14,6 +14,7 @@ jobs:
       - uses: actions/setup-java@v2
         with:
           java-version: 11
+          distribution: adopt
       - run: ./gradlew clean assemble
       - run: zip -r templates.zip templates
       - run: zip -r fonts.zip fonts
