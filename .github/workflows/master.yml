@@ -20,7 +20,7 @@ jobs:
       - run: zip -r fonts.zip fonts
       - run: echo "::set-output name=version::$(date +'%Y-%m-%d-%H-%M-%S')"
         id: version
-      - uses: actions/create-release@v1
+      - uses: actions/create-release@v1.1.4
         id: release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
