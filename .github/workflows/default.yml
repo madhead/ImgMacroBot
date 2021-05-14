@@ -7,7 +7,7 @@ jobs:
     name: Detekt
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2.3.4
       - uses: actions/setup-java@v2
         with:
           java-version: 11
@@ -17,7 +17,7 @@ jobs:
     name: Test
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2.3.4
       - uses: actions/setup-java@v2
         with:
           java-version: 11
@@ -27,7 +27,7 @@ jobs:
     name: Lint Ansible
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2.3.4
       - uses: ansible/ansible-lint-action@master
         with:
           targets: deploy/ImgMacroBot.yml
@@ -37,6 +37,6 @@ jobs:
     name: Check Gradle version
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2.3.4
       - uses: madhead/check-gradle-version@v1
     continue-on-error: true
