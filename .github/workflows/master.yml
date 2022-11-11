@@ -18,7 +18,7 @@ jobs:
       - run: ./gradlew clean assemble
       - run: zip -r templates.zip templates
       - run: zip -r fonts.zip fonts
-      - run: echo "::set-output name=version::$(date +'%Y-%m-%d-%H-%M-%S')"
+      - run: echo "version=$(date +'%Y-%m-%d-%H-%M-%S')" >> $GITHUB_OUTPUT
         id: version
       - uses: actions/create-release@v1
         id: release
